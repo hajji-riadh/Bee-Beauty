@@ -1,0 +1,59 @@
+.list-users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 740px;
+  padding: 10px 50px;
+  margin: 30px;
+  border-radius: 6px;
+  background: white;
+}
+
+.listusers-format-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.listusers-format {
+  align-items: center;
+  font-weight: 500;
+}
+
+.listusers-format p {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: 1fr 90px 1fr 1fr 1fr;
+}
+
+.listusers-remove-icon {
+  cursor: pointer;
+  margin: auto;
+}
+
+.listusers-allusers {
+  overflow-y: auto;
+}
+
+@media (max-width: 800px) {
+  .list-users {
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    padding: 10px 30px;
+    margin: 20px auto;
+  }
+
+  .listusers-format-main {
+    padding: 15px 0px;
+    color: #454545;
+    font-size: 12px;
+  }
+}

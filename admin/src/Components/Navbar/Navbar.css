@@ -1,0 +1,35 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 60px;
+  box-shadow: 0 1px 3px -2px;
+  margin-bottom: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(254, 255, 232, 1) 0%,
+    rgba(214, 219, 191, 1) 100%
+  );
+  color: #000;
+}
+
+.nav-logo {
+  width: 200px;
+  cursor: pointer;
+}
+
+.nav-profile {
+  width: 55px;
+}
+
+@media (max-width: 800px) {
+  .navbar {
+    padding: 15px 30px;
+  }
+  .nav-logo {
+    width: 150px;
+  }
+  .nav-profile {
+    width: 40px;
+  }
+}
