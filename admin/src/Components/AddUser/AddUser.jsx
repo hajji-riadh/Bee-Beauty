@@ -27,7 +27,7 @@ const AddUser = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        data.success ? alert("Utilisateur ajouter") : alert("echec");
+        data.success ? alert("Utilisateur ajouter") : alert("Utilisateur existe !");
       });
   };
   return (

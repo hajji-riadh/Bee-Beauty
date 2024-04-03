@@ -6,6 +6,7 @@ import users_icon from "../../assets/users.png";
 import provider_icon from "../../assets/provider_icon.jpg";
 import add_user_icon from "../../assets/user_icon.jpg";
 import list_provider_icon from "../../assets/fournisseurs_icon.jpg";
+import list_order_icon from "../../assets/list_commandes.jpg";
 
 const Sidebar = () => {
   return (
@@ -49,6 +50,13 @@ const Sidebar = () => {
         <div className="sidebar-item">
           <img src={list_provider_icon} alt="" width={30} />
           <p>Liste des livreurs</p>
+        </div>
+      </Link>
+
+      <Link to={"/listorder"} style={{ textDecoration: "none" }}>
+        <div className="sidebar-item">
+          <img src={list_order_icon} alt="" width={30} />
+          <p>Liste des Orders</p>
         </div>
       </Link>
     </div>

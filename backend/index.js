@@ -13,7 +13,7 @@ app.use(cors());
 // connecter a mongoDB
 
 mongoose.connect(
-  "mongodb+srv://hajji:hajji9090@cluster0.oje0sbh.mongodb.net/e-learning"
+  "mongodb+srv://hajjiriadh378:hajji11riadh11!!@clusterbee0.sist3wu.mongodb.net/bee"
 );
 
 // creer API
@@ -331,6 +331,22 @@ app.post("/getcart", fetchUser, async (req, res) => {
   console.log("GetCart");
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
+});
+
+// création d'un schema pour les commandes
+
+const Order = mongoose.model("Order",{
+    nameuser: { type: String, required: true},
+    nameproduct: { type: String, required: true},
+    image: { type: String, required: true},
+    quantity: { type: Number, required: true},
+});
+
+// liste des commandes
+app.get("/allorders", async (req, res) => {
+  let orders = await Order.find({});
+  console.log("All Orders Fetched");
+  res.send(orders);
 });
 
 app.listen(port, (error) => {

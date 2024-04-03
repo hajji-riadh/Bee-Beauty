@@ -8,19 +8,21 @@ import Home from "../Home/Home";
 import AddUser from "../../Components/AddUser/AddUser";
 import ListDelivery from "../../Components/ListDelivery/ListDelivery";
 import AddDelivery from "../../Components/AddDelivery/AddDelivery";
+import ListOrder from "../../Components/ListOrder/ListOrder";
 
 const Admin = () => {
   return (
     <div className="admin">
       <Sidebar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Home />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/listproduct" element={<ListProduct />} />
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/allusers" element={<ListUsers />} />
         <Route path="/adddelivery" element={<AddDelivery />} />
         <Route path="/listdelivery" element={<ListDelivery />} />
+        <Route path="/listorder" element={<ListOrder />} />
       </Routes>
     </div>
   );
