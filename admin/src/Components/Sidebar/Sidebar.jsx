@@ -1,6 +1,5 @@
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-import add_product_icon from "../../assets/Product_Cart.svg";
 import list_product_icon from "../../assets/Product_list_icon.svg";
 import users_icon from "../../assets/users.png";
 import list_provider_icon from "../../assets/fournisseurs_icon.jpg";
