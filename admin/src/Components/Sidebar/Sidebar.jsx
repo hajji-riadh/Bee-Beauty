@@ -9,13 +9,6 @@ import list_order_icon from "../../assets/list_commandes.jpg";
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <Link to={"/addproduct"} style={{ textDecoration: "none" }}>
-        <div className="sidebar-item">
-          <img src={add_product_icon} alt="" />
-          <p>Ajouter un produit</p>
-        </div>
-      </Link>
-
       <Link to={"/listproduct"} style={{ textDecoration: "none" }}>
         <div className="sidebar-item">
           <img src={list_product_icon} alt="" />

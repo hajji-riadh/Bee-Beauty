@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./ListProduct.css";
 import cross_icon from "../../assets/cross_icon.png";
 
@@ -73,6 +74,14 @@ const ListProduct = () => {
             </>
           );
         })}
+      </div>
+      <div className="addproduct">
+        <h1>Pour ajouter un produit :</h1>
+        <Link to={"/addproduct"} style={{ textDecoration: "none" }}>
+          <div className="sidebar-item">
+            <button className="btn-addproduct">Ajouter un produit</button>
+          </div>
+        </Link>
       </div>
     </div>
   );
