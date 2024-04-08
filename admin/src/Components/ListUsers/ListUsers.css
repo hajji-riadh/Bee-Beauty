@@ -58,6 +58,11 @@
   }
 }
 
+.adduser{
+  margin-top: 20px;
+  display: flex;
+}
+
 .btn-adduser{
   margin-top: 20px;
     width: 160px;

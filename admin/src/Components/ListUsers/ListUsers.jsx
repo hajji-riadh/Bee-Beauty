@@ -62,6 +62,9 @@ const ListUsers = () => {
             </>
           );
         })}
+      </div>
+      <div className="adduser">
+        <h1>Pour ajouter un nouveau utilisateur :</h1>
         <Link to={"/adduser"} style={{ textDecoration: "none" }}>
           <div className="sidebar-item">
             <button className="btn-adduser">Ajouter un utilisateur</button>
