@@ -43,6 +43,10 @@
   overflow-y: auto;
 }
 
+.adddelivery{
+  display: flex;
+}
+
 .btn-adddelivery{
   margin-top: 20px;
     width: 160px;

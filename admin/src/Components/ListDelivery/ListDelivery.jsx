@@ -67,6 +67,9 @@ const ListDelivery = () => {
             </>
           );
         })}
+      </div>
+      <div className="adddelivery">
+        <h1>Pour ajouter un nouveau Livreur : </h1>
         <Link to={"/adddelivery"} style={{ textDecoration: "none" }}>
           <div className="sidebar-item">
             <button className="btn-adddelivery">Ajouter un livreur</button>
