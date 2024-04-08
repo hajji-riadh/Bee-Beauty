@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./ListDelivery.css";
 import cross_icon from "../../assets/cross_icon.png";
 
@@ -66,6 +67,11 @@ const ListDelivery = () => {
             </>
           );
         })}
+        <Link to={"/adddelivery"} style={{ textDecoration: "none" }}>
+          <div className="sidebar-item">
+            <button className="btn-adddelivery">Ajouter un livreur</button>
+          </div>
+        </Link>
       </div>
     </div>
   );

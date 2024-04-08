@@ -43,6 +43,19 @@
   overflow-y: auto;
 }
 
+.btn-adddelivery{
+  margin-top: 20px;
+    width: 160px;
+    height: 50px;
+    border-radius: 6px;
+    background: #6079ff;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
 @media (max-width: 800px) {
   .list-delivery {
     box-sizing: border-box;
