@@ -1,10 +1,9 @@
-import "./AddUser.css";
+import "./UpdateUser.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import back_icon from "../../assets/back_icon.png";
+import back_icon from "../../../assets/back_icon.png";
 
-
-const AddUser = () => {
+const UpdateUser = () => {
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -18,10 +17,9 @@ const AddUser = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const Add_user = async () => {
+  const Update_user = async () => {
     console.log(userDetails);
-    await fetch("http://localhost:4000/signup", {
+    await fetch("http://localhost:4000/updateuser", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -32,12 +30,12 @@ const AddUser = () => {
       .then((resp) => resp.json())
       .then((data) => {
         data.success
-          ? alert("L'utilisateur ajouter avec succée ")
-          : alert("Utilisateur déja existe !");
+          ? alert("User with this email not found")
+          : alert("User updated successfully");
       });
   };
   return (
-    <div className="add-user">
+    <div className="update-user">
       <div className="back">
         <Link to={"/allusers"} style={{ textDecoration: "none" }}>
           <img
@@ -48,7 +46,7 @@ const AddUser = () => {
           />
         </Link>
       </div>
-      <div className="adduser-itemfield">
+      <div className="updateuser-itemfield">
         <p>Nom</p>
         <input
           type="text"
@@ -61,7 +59,7 @@ const AddUser = () => {
         />
         <p>Email</p>
         <input
-          type="text"
+          type="email"
           value={userDetails.email}
           onChange={changeHandler}
           name="email"
@@ -92,14 +90,14 @@ const AddUser = () => {
 
       <button
         onClick={() => {
-          Add_user();
+          Update_user();
         }}
-        className="adduser-btn"
+        className="updateuser-btn"
       >
-        AJOUTER
+        MODIFIER
       </button>
     </div>
   );
 };
 
-export default AddUser;
+export default UpdateUser;

@@ -12,25 +12,30 @@
 
 .listusers-format-main {
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: space-around;
   gap: 10px;
   width: 100%;
   padding: 20px 0px;
-  color: #454545;
+  color: #5f43d8e7;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .listusers-format {
+  display: flex;
   align-items: center;
-  font-weight: 500;
+  justify-content: space-around;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0px;
+  font-weight: 400;
 }
 
 .listusers-format p {
   display: grid;
   gap: 6px;
-  grid-template-columns: 1fr 90px 1fr 1fr 1fr;
+  grid-template-columns: 1fr 70px 1fr 1fr 1fr;
 }
 
 .listusers-remove-icon {
@@ -40,6 +45,58 @@
 
 .listusers-allusers {
   overflow-y: auto;
+}
+
+.updateuser {
+  margin-top: 20px;
+  display: flex;
+}
+
+.btn-updateuser {
+  width: 80px;
+  height: 40px;
+  align-items: center;
+  margin-top: 14px;
+  margin-left: 10px;
+  border-radius: 4px;
+  background: #50d9ebbb;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.btn-removeuser {
+  width: 80px;
+  height: 30px;
+  border-radius: 4px;
+  background: #eb5050;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 13px;
+  font-weight: 200;
+}
+
+.adduser {
+  margin-top: 20px;
+  display: flex;
+}
+
+.btn-adduser {
+  width: 80px;
+  height: 40px;
+  align-items: center;
+  margin-top: 14px;
+  margin-left: 10px;
+  border-radius: 4px;
+  background: #62eb50c4;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: 200;
 }
 
 @media (max-width: 800px) {
@@ -56,22 +113,4 @@
     color: #454545;
     font-size: 12px;
   }
-}
-
-.adduser{
-  margin-top: 20px;
-  display: flex;
-}
-
-.btn-adduser{
-  margin-top: 20px;
-    width: 160px;
-    height: 50px;
-    border-radius: 6px;
-    background: #6079ff;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
 }

@@ -174,12 +174,29 @@ app.post("/login", async (req, res) => {
 //supprimer un utilisateur par l'administrateur
 
 app.post("/removeuser", async (req, res) => {
-  await Users.findOneAndDelete({ id: req.body.id });
-  console.log("Removed user with id : ", req.body.id);
+  await Users.findOneAndDelete({ email: req.body.email });
+  console.log("Removed user with email : ", req.body.email);
   res.json({
     success: true,
     name: req.body.name,
   });
+});
+
+// modifier un utilisateur d'après l'email par l'administrateur
+
+app.post("/updateuser", async (req, res) => {
+  let { email, name, phone, password } = req.body;
+  let user = await Users.findOne({ email: email });
+  if (user) {
+    user.name = name;
+    user.phone = phone;
+    user.password = password;
+    await user.save();
+    console.log("Updated user with email : ", email);
+  } else {
+    console.log("User with email : ", email, " not found");
+  }
+  res.send(user);
 });
 
 //liste des utilisateurs
@@ -335,11 +352,11 @@ app.post("/getcart", fetchUser, async (req, res) => {
 
 // création d'un schema pour les commandes
 
-const Order = mongoose.model("Order",{
-    nameuser: { type: String, required: true},
-    nameproduct: { type: String, required: true},
-    image: { type: String, required: true},
-    quantity: { type: Number, required: true},
+const Order = mongoose.model("Order", {
+  nameuser: { type: String, required: true },
+  nameproduct: { type: String, required: true },
+  image: { type: String, required: true },
+  quantity: { type: Number, required: true },
 });
 
 // liste des commandes
