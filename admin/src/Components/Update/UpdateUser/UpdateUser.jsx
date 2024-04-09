@@ -42,7 +42,6 @@ const UpdateUser = () => {
             src={back_icon}
             width="30"
             alt=""
-            className="listproduct-remove-icon"
           />
         </Link>
       </div>

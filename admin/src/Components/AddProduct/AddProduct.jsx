@@ -1,6 +1,8 @@
 import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import back_icon from "../../assets/back_icon.png";
 
 const AddProduct = () => {
   const [image, setImage] = useState(false);
@@ -63,6 +65,11 @@ const AddProduct = () => {
 
   return (
     <div className="add-product">
+      <div className="back">
+        <Link to={"/listproduct"} style={{ textDecoration: "none" }}>
+          <img src={back_icon} width="30" alt="" />
+        </Link>
+      </div>
       <div className="addproduct-itemfield">
         <p>Titre de Produit</p>
         <input
