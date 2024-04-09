@@ -44,8 +44,14 @@
   border-radius: 75px;
   background: #ededed;
   color: #787878;
+  cursor: pointer;
   font-size: 18px;
   font-weight: 500;
+}
+
+.shopcategory-loadmore:hover {
+  background: #e06666;
+  color: #271a1a;
 }
 
 @media (max-width: 1280px) {

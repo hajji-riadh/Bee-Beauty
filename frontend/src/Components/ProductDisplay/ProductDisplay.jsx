@@ -49,10 +49,10 @@ export const ProductDisplay = (props) => {
           AJOUTER AU PANIER
         </button>
         <p className="productdisplay-right-category">
-          <span>Category :</span> {product.category}
+          <span>Catégorie :</span> {product.category}
         </p>
         <p className="productdisplay-right-category">
-          <span>Quantity :</span> {product.quantity}
+          <span>Quantité :</span> {product.quantity}
         </p>
       </div>
     </div>

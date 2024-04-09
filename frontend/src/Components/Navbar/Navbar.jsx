@@ -94,11 +94,11 @@ export const Navbar = () => {
               window.location.replace("/");
             }}
           >
-            Logout
+            Déconnexion
           </button>
         ) : (
           <Link style={{ textDecoration: "none" }} to="/login">
-            <button>Log in</button>
+            <button>Se connecter</button>
           </Link>
         )}
 

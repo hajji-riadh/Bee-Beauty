@@ -30,7 +30,7 @@ export const NewCollections = () => {
               old_price={item.old_price}
             />
           );
-        })}{" "}
+        })}
       </div>
     </div>
   );

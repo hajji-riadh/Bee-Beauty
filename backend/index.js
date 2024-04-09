@@ -313,12 +313,16 @@ app.get("/relatedproducts", async (req, res) => {
   res.send(popular_products);
 });
 
-// Création d’un logiciel de gestion pour récupérer l’utilisateur
+// Création d’un logiciel de gestion pour récupérer l’utilisateur (fonction middleware)
 
 const fetchUser = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
-    res.status(401).send({ errors: "Please authenticate using valid token" });
+    res
+      .status(401)
+      .send({
+        errors: "Veuillez vous authentifier en utilisant un jeton valide",
+      });
   } else {
     try {
       const data = jwt.verify(token, "secret_ecom");
@@ -327,7 +331,9 @@ const fetchUser = async (req, res, next) => {
     } catch (error) {
       res
         .status(401)
-        .send({ errors: "please authenticate using a valid token" });
+        .send({
+          errors: "Veuillez vous authentifier en utilisant un jeton valide",
+        });
     }
   }
 };
@@ -373,11 +379,11 @@ app.post("/getcart", fetchUser, async (req, res) => {
 const Order = mongoose.model("Order", {
   nameuser: { type: String, required: true },
   nameproduct: { type: String, required: true },
-  image: { type: String, required: true },
   quantity: { type: Number, required: true },
+  totalprice: { type: Number, required: true },
 });
 
-// liste des commandes
+// liste de toutes les commandes
 app.get("/allorders", async (req, res) => {
   let orders = await Order.find({});
   console.log("All Orders Fetched");

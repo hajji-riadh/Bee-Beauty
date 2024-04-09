@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./CSS/Login.css";
 
 export const Login = () => {
-  const [state, setState] = useState("Login");
+  const [state, setState] = useState("Connexion");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -63,9 +63,8 @@ export const Login = () => {
     <div className="loginsignup">
       <div className="loginsignup-container">
         <h1>{state}</h1>
-
         <div className="loginsignup-fields">
-          {state === "Sign Up" ? (
+          {state === "S'Inscrire" ? (
             <input
               name="username"
               value={formData.username}
@@ -83,7 +82,7 @@ export const Login = () => {
             type="email"
             placeholder="Email Address"
           />
-          {state === "Sign Up" ? (
+          {state === "S'Inscrire" ? (
             <input
               name="number"
               value={formData.phone}
@@ -105,39 +104,42 @@ export const Login = () => {
 
         <button
           onClick={() => {
-            state === "Login" ? login() : signup();
+            state === "Connexion" ? login() : signup();
           }}
         >
-          Continue
+          Continuer
         </button>
 
-        {state === "Sign Up" ? (
+        {state === "S'Inscrire" ? (
           <p className="loginsignup-login">
-            Already have an acount ?{" "}
+            Vous avez déjà un compte ?
             <span
               onClick={() => {
-                setState("Login");
+                setState("Connexion");
               }}
             >
-              Login here
+              Connectez-vous ici
             </span>
           </p>
         ) : (
           <p className="loginsignup-login">
-            Create an acount ?{" "}
+            Créer un compte ?
             <span
               onClick={() => {
-                setState("Sign Up");
+                setState("S'Inscrire");
               }}
             >
-              Click here
+              Cliquez ici
             </span>
           </p>
         )}
 
         <div className="loginsignup-agree">
           <input type="checkbox" name="" id="" />
-          <p>By continuing, i agree to the terms of use & privacy policy.</p>
+          <p>
+            En continuant, j'accepte les conditions d'utilisation et la
+            politique de confidentialité.
+          </p>
         </div>
       </div>
     </div>
