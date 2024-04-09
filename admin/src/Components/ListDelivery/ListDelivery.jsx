@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ListDelivery.css";
-import cross_icon from "../../assets/cross_icon.png";
 
 const ListDelivery = () => {
   const [alldelivery, setAlldelivery] = useState([]);
@@ -17,14 +16,14 @@ const ListDelivery = () => {
     fetchInfo();
   }, []);
 
-  const remove_delivery = async (id) => {
+  const remove_delivery = async (email) => {
     await fetch("http://localhost:4000/removedelivery", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ email: email }),
     });
     await fetchInfo();
   };
