@@ -2,7 +2,7 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 800px;
-  pupdateing: 30px 50px;
+  padding: 30px 50px;
   margin: 20px 30px;
   border-radius: 6px;
   background: white;
@@ -19,7 +19,7 @@
   width: 100%;
   height: 50px;
   border-radius: 4px;
-  pupdateing-left: 15px;
+  padding-left: 15px;
   border: 1px solid #c3c3c3;
   outline: none;
   color: #7b7b7b;
@@ -51,7 +51,7 @@
   width: 100%;
   height: 150px;
   border-radius: 4px;
-  pupdateing-left: 15px;
+  padding-left: 15px;
   border: 1px solid #c3c3c3;
   outline: none;
   color: #7b7b7b;
@@ -62,7 +62,7 @@
 @media (max-width: 800px) {
   .update-delivery {
     width: auto;
-    pupdateing: 30px;
+    padding: 30px;
     margin: 20px;
   }
 }
