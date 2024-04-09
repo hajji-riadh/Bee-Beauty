@@ -54,14 +54,14 @@ const ListDelivery = () => {
                 <p>{delivery.city}</p>
                 <p>{delivery.phone}</p>
                 <p>{delivery.description}</p>
-                <img
-                  onClick={() => {
-                    remove_delivery(delivery.id);
-                  }}
-                  src={cross_icon}
-                  alt=""
-                  className="listdelivery-remove-icon"
-                />
+                <div className="removeuser">
+                  <button
+                    className="btn-removeuser"
+                    onClick={() => remove_delivery(delivery.email)}
+                  >
+                    Retirer
+                  </button>
+                </div>
               </div>
               <hr />
             </>
@@ -69,11 +69,15 @@ const ListDelivery = () => {
         })}
       </div>
       <div className="adddelivery">
-        <h1>Pour ajouter un nouveau Livreur : </h1>
+        <h1>Pour ajouter un nouvelle Livreur : </h1>
         <Link to={"/adddelivery"} style={{ textDecoration: "none" }}>
-          <div className="sidebar-item">
-            <button className="btn-adddelivery">Ajouter un livreur</button>
-          </div>
+          <button className="btn-adddelivery">Ajouter un livreur</button>
+        </Link>
+      </div>
+      <div className="updatedelivery">
+        <h1>Pour modifier un Livreur : </h1>
+        <Link to={"/updatedelivery"} style={{ textDecoration: "none" }}>
+          <button className="btn-updatedelivery">Modifier un livreur</button>
         </Link>
       </div>
     </div>

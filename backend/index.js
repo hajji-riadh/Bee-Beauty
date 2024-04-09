@@ -249,6 +249,24 @@ app.post("/adddelivery", async (req, res) => {
   console.log("delivery with name: ", delivery.name, ", Saved");
 });
 
+// modifier un livreur d'après l'email par l'administrateur
+
+app.post("/updatedelivery", async (req, res) => {
+  let { email, name, city, phone, description } = req.body;
+  let delivery = await Delivery.findOne({ email: email });
+  if (delivery) {
+    delivery.name = name;
+    delivery.city = city;
+    delivery.phone = phone;
+    delivery.description = description;
+    await delivery.save();
+    console.log("Updated delivery with email : ", email);
+  } else {
+    console.log("Delivery with email : ", email, " not found");
+  }
+  res.send(delivery);
+});
+
 // supprimer un livreur par l'administrateur
 
 app.post("/removedelivery", async (req, res) => {

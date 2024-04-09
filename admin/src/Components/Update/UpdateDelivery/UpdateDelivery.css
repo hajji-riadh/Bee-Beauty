@@ -1,25 +1,25 @@
-.add-delivery {
+.update-delivery {
   box-sizing: border-box;
   width: 100%;
   max-width: 800px;
-  padding: 30px 50px;
+  pupdateing: 30px 50px;
   margin: 20px 30px;
   border-radius: 6px;
   background: white;
 }
 
-.adddelivery-itemfield {
+.updatedelivery-itemfield {
   width: 100%;
   color: #7b7b7b8d;
   font-size: 16px;
 }
 
-.adddelivery-itemfield input {
+.updatedelivery-itemfield input {
   box-sizing: border-box;
   width: 100%;
   height: 50px;
   border-radius: 4px;
-  padding-left: 15px;
+  pupdateing-left: 15px;
   border: 1px solid #c3c3c3;
   outline: none;
   color: #7b7b7b;
@@ -28,7 +28,7 @@
   box-shadow: 0 0 8px 2px;
 }
 
-.adddelivery-btn {
+.updatedelivery-btn {
   margin-top: 20px;
   width: 160px;
   height: 50px;
@@ -40,18 +40,18 @@
   font-size: 16px;
   font-weight: 500;
 }
-.adddelivery-itemfield-desc {
+.updatedelivery-itemfield-desc {
   width: 100%;
   color: #7b7b7b;
   font-size: 16px;
 }
 
-.adddelivery-itemfield-desc input {
+.updatedelivery-itemfield-desc input {
   box-sizing: border-box;
   width: 100%;
   height: 150px;
   border-radius: 4px;
-  padding-left: 15px;
+  pupdateing-left: 15px;
   border: 1px solid #c3c3c3;
   outline: none;
   color: #7b7b7b;
@@ -60,9 +60,9 @@
 }
 
 @media (max-width: 800px) {
-  .add-delivery {
+  .update-delivery {
     width: auto;
-    padding: 30px;
+    pupdateing: 30px;
     margin: 20px;
   }
 }

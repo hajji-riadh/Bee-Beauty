@@ -10,6 +10,7 @@ import ListDelivery from "../../Components/ListDelivery/ListDelivery";
 import AddDelivery from "../../Components/AddDelivery/AddDelivery";
 import ListOrder from "../../Components/ListOrder/ListOrder";
 import UpdateUser from "../../Components/Update/UpdateUser/UpdateUser";
+import UpdateDelivery from "../../Components/Update/UpdateDelivery/UpdateDelivery";
 
 const Admin = () => {
   return (
@@ -23,6 +24,7 @@ const Admin = () => {
         <Route path="/updateuser" element= {<UpdateUser/>}/>
         <Route path="/allusers" element={<ListUsers />} />
         <Route path="/adddelivery" element={<AddDelivery />} />
+        <Route path="/updatedelivery" element={<UpdateDelivery />}/>
         <Route path="/listdelivery" element={<ListDelivery />} />
         <Route path="/listorder" element={<ListOrder />} />
       </Routes>

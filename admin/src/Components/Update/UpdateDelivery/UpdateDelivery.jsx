@@ -1,10 +1,9 @@
-import "./AddDelivery.css";
+import "./UpdateDelivery.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import back_icon from "../../assets/back_icon.png";
+import back_icon from "../../../assets/back_icon.png";
 
-
-const AddDelivery = () => {
+const UpdateDelivery = () => {
   const [deliveryDetails, setDeliveryDetails] = useState({
     name: "",
     email: "",
@@ -14,15 +13,11 @@ const AddDelivery = () => {
   });
 
   const changeHandler = (e) => {
-    setDeliveryDetails({
-      ...deliveryDetails,
-      [e.target.name]: e.target.value,
-    });
+    setDeliveryDetails({ ...deliveryDetails, [e.target.name]: e.target.value });
   };
-
-  const Add_delivery = async () => {
+  const Update_delivery = async () => {
     console.log(deliveryDetails);
-    await fetch("http://localhost:4000/adddelivery", {
+    await fetch("http://localhost:4000/updatedelivery", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -32,24 +27,25 @@ const AddDelivery = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        data.success ? alert("Livreur ajouter") : alert("echec");
+        data.success
+          ? alert("Delivery with this email not found")
+          : alert("Delivery updated successfully");
       });
   };
 
   return (
-    <div className="add-delivery">
+    <div className="update-delivery">
       <div className="back">
         <Link to={"/listdelivery"} style={{ textDecoration: "none" }}>
           <img
             src={back_icon}
             width="30"
             alt=""
-            className="listproduct-remove-icon"
           />
         </Link>
       </div>
-      <div className="adddelivery-itemfield">
-        <p>Nom de Livreur</p>
+      <div className="updatedelivery-itemfield">
+        <p>Nom</p>
         <input
           type="text"
           value={deliveryDetails.name}
@@ -59,7 +55,7 @@ const AddDelivery = () => {
           pattern="[A-Za-z0-9]{3,}"
           required
         />
-        <p>Email de Livreur</p>
+        <p>Email</p>
         <input
           type="email"
           value={deliveryDetails.email}
@@ -68,7 +64,7 @@ const AddDelivery = () => {
           placeholder="Email de livreur"
           required
         />
-        <p>Telephone de Livreur</p>
+        <p>Telephone</p>
         <input
           type="text"
           value={deliveryDetails.phone}
@@ -78,7 +74,7 @@ const AddDelivery = () => {
           pattern="[0-9]{8,}"
           required
         />
-        <p>ville de Livreur</p>
+        <p>Ville</p>
         <input
           type="text"
           value={deliveryDetails.city}
@@ -91,7 +87,7 @@ const AddDelivery = () => {
       </div>
 
       <div className="adddelivery-itemfield-desc">
-        <p>Description de livreur</p>
+        <p>Description</p>
         <input
           type="text"
           value={deliveryDetails.description}
@@ -105,14 +101,14 @@ const AddDelivery = () => {
 
       <button
         onClick={() => {
-          Add_delivery();
+          Update_delivery();
         }}
-        className="adddelivery-btn"
+        className="updatedelivery-btn"
       >
-        AJOUTER
+        MODIFIER
       </button>
     </div>
   );
 };
 
-export default AddDelivery;
+export default UpdateDelivery;

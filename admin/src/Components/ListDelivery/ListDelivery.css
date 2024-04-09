@@ -48,16 +48,37 @@
 }
 
 .btn-adddelivery{
+  width: 150px;
+  height: 40px;
+  align-items: center;
   margin-top: 20px;
-    width: 160px;
-    height: 50px;
-    border-radius: 6px;
-    background: #6079ff;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
+  margin-left: 10px;
+  border-radius: 4px;
+  background: #5086eba4;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.updatedelivery{
+  display: flex;
+}
+
+.btn-updatedelivery {
+  width: 150px;
+  height: 40px;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  background: #50eb77b2;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: 200;
 }
 
 @media (max-width: 800px) {
