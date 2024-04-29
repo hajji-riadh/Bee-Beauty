@@ -34,6 +34,12 @@ export const CartItems = () => {
                   src={remove_icon}
                   onClick={() => {
                     removeFromCart(e.id);
+                    all_product.forEach((product) => {
+                      if (product.id) {
+                        product.quantity += 1;
+                        console.log(product.quantity);
+                      }
+                    });
                   }}
                   alt=""
                 />

@@ -6,7 +6,7 @@ import { ShopContext } from "../../Context/ShopContext";
 
 export const ProductDisplay = (props) => {
   const { product } = props;
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart, all_product } = useContext(ShopContext);
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
@@ -44,6 +44,12 @@ export const ProductDisplay = (props) => {
         <button
           onClick={() => {
             addToCart(product.id);
+            all_product.forEach((product) => {
+              if (product.id && product.quantity > -1) {
+                product.quantity -= 1;
+                console.log(product.quantity);
+              }
+            });
           }}
         >
           AJOUTER AU PANIER

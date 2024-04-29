@@ -30,8 +30,8 @@ const UpdateUser = () => {
       .then((resp) => resp.json())
       .then((data) => {
         data.success
-          ? alert("User with this email not found")
-          : alert("User updated successfully");
+          ? alert("Utilisateur avec cette adresse e-mail introuvable !")
+          : alert("Utilisateur mis à jour avec succès.");
       });
   };
   return (

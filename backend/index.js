@@ -55,8 +55,8 @@ const Product = mongoose.model("Product", {
   category: { type: String, required: true },
   quantity: { type: Number, required: true },
   new_price: { type: Number, required: true },
-  old_price: { type: Number, required: true },
-  description: { type: String, required: true },
+  old_price: { type: Number },
+  description: { type: String },
   date: { type: Date, default: Date.now },
   avilable: { type: Boolean, default: true },
 });
@@ -92,14 +92,14 @@ app.post("/addproduct", async (req, res) => {
     success: true,
     name: req.body.name,
   });
-  console.log("Product with name : ", product.name, ", Saved");
+  console.log("Produit avec le nom : ", product.name, ", enregistré.");
 });
 
 // créer une API pour supprimer des produits
 
 app.post("/removeproduct", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
-  console.log("Product with id ", req.body.id, " removed");
+  console.log("Produit avec id ", req.body.id, " supprimé");
   res.json({
     success: true,
     name: req.body.name,
@@ -110,7 +110,7 @@ app.post("/removeproduct", async (req, res) => {
 
 app.get("/allproducts", async (req, res) => {
   let products = await Product.find({});
-  console.log("All Products Fetched");
+  console.log("Tous Les Produits Récupérés");
   res.send(products);
 });
 
@@ -130,7 +130,7 @@ const Users = mongoose.model("Users", {
 app.post("/signup", async (req, res) => {
   let check = await Users.findOne({ email: req.body.email });
   if (check) {
-    return res.status(400).json({ success: false, errors: "existing" });
+    return res.status(400).json({ success: false, errors: "existant !" });
   }
   let cart = {};
   for (let i = 0; i < 300; i++) {
@@ -164,10 +164,10 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign(data, "secret_ecom");
       res.json({ success: true, token });
     } else {
-      res.json({ success: false, errors: "Wrong password" });
+      res.json({ success: false, errors: "Mot de passe incorrect !" });
     }
   } else {
-    res.json({ success: false, errors: "Wrong Email ID" });
+    res.json({ success: false, errors: "IDENTIFIANT DE Messagerie INCORRECT" });
   }
 });
 
@@ -175,7 +175,7 @@ app.post("/login", async (req, res) => {
 
 app.post("/removeuser", async (req, res) => {
   await Users.findOneAndDelete({ email: req.body.email });
-  console.log("Removed user with email : ", req.body.email);
+  console.log("Utilisateur supprimé avec email : ", req.body.email);
   res.json({
     success: true,
     name: req.body.name,
@@ -192,9 +192,9 @@ app.post("/updateuser", async (req, res) => {
     user.phone = phone;
     user.password = password;
     await user.save();
-    console.log("Updated user with email : ", email);
+    console.log("Mise à jour de l'utilisateur par e-mail : ", email);
   } else {
-    console.log("User with email : ", email, " not found");
+    console.log("Utilisateur avec e-mail : ", email, " non trouvé.");
   }
   res.send(user);
 });
@@ -203,7 +203,7 @@ app.post("/updateuser", async (req, res) => {
 
 app.get("/allusers", async (req, res) => {
   let users = await Users.find({});
-  console.log("All Users Fetched");
+  console.log("Tous Les Utilisateurs Récupérés");
   res.send(users);
 });
 
@@ -246,7 +246,7 @@ app.post("/adddelivery", async (req, res) => {
     success: true,
     name: req.body.name,
   });
-  console.log("delivery with name: ", delivery.name, ", Saved");
+  console.log("livreur avec le nom : ", delivery.name, " enregistré.");
 });
 
 // modifier un livreur d'après l'email par l'administrateur
@@ -260,9 +260,9 @@ app.post("/updatedelivery", async (req, res) => {
     delivery.phone = phone;
     delivery.description = description;
     await delivery.save();
-    console.log("Updated delivery with email : ", email);
+    console.log("Mise à jour de la livreur par e-mail : ", email);
   } else {
-    console.log("Delivery with email : ", email, " not found");
+    console.log("Livreur avec email : ", email, " n'existe pas");
   }
   res.send(delivery);
 });
@@ -271,7 +271,7 @@ app.post("/updatedelivery", async (req, res) => {
 
 app.post("/removedelivery", async (req, res) => {
   await Delivery.findOneAndDelete({ id: req.body.id });
-  console.log("Removed delivery with id: ", req.body.id);
+  console.log("Livreur avec id ", req.body.id, " supprimée");
   res.json({
     success: true,
     name: req.body.name,
@@ -282,7 +282,7 @@ app.post("/removedelivery", async (req, res) => {
 
 app.get("/alldelivery", async (req, res) => {
   let deliverys = await Delivery.find({});
-  console.log("All deliverys Fetched");
+  console.log("Toutes les livreurs Récupérées");
   res.send(deliverys);
 });
 
@@ -291,7 +291,7 @@ app.get("/alldelivery", async (req, res) => {
 app.get("/newcollections", async (req, res) => {
   let products = await Product.find({});
   let newcollection = products.slice(1).slice(-8);
-  console.log("NewCollection Fetched");
+  console.log("Nouvelle Collection Récupérée");
   res.send(newcollection);
 });
 
@@ -300,7 +300,7 @@ app.get("/newcollections", async (req, res) => {
 app.get("/popularinmakeup", async (req, res) => {
   let products = await Product.find({ category: "makeup" });
   let popular_in_makeup = products.slice(0, 4);
-  console.log("Popular in makeup fetched");
+  console.log("Populaire dans le maquillage récupéré");
   res.send(popular_in_makeup);
 });
 
@@ -309,7 +309,7 @@ app.get("/popularinmakeup", async (req, res) => {
 app.get("/relatedproducts", async (req, res) => {
   let products = await Product.find({ category: "visage" });
   let popular_products = products.slice(0, 4);
-  console.log("Popular in products fetched");
+  console.log("Populaire dans les produits récupérés");
   res.send(popular_products);
 });
 
@@ -318,22 +318,18 @@ app.get("/relatedproducts", async (req, res) => {
 const fetchUser = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
-    res
-      .status(401)
-      .send({
-        errors: "Veuillez vous authentifier en utilisant un jeton valide",
-      });
+    res.status(401).send({
+      errors: "Veuillez vous authentifier en utilisant un jeton valide",
+    });
   } else {
     try {
       const data = jwt.verify(token, "secret_ecom");
       req.user = data.user;
       next();
     } catch (error) {
-      res
-        .status(401)
-        .send({
-          errors: "Veuillez vous authentifier en utilisant un jeton valide",
-        });
+      res.status(401).send({
+        errors: "Veuillez vous authentifier en utilisant un jeton valide",
+      });
     }
   }
 };
@@ -342,7 +338,12 @@ const fetchUser = async (req, res, next) => {
 
 app.post("/addtocart", fetchUser, async (req, res) => {
   let user = await Users.findOne({ _id: req.user.id });
-  console.log(user.name, " Added the product id :", req.body.itemId);
+  console.log(
+    user.name,
+    " Ajout du produit avec id :",
+    req.body.itemId,
+    " dans se panier"
+  );
   let userData = await Users.findOne({ _id: req.user.id });
   userData.cartData[req.body.itemId] += 1;
   await Users.findOneAndUpdate(
@@ -355,7 +356,13 @@ app.post("/addtocart", fetchUser, async (req, res) => {
 // Création d’un point de terminaison pour supprimer les produits dans le cart
 
 app.post("/removefromcart", fetchUser, async (req, res) => {
-  console.log("Removed", req.body.itemId);
+  let user = await Users.findOne({ _id: req.user.id });
+  console.log(
+    user.name,
+    " Supprimé le produit avec id : ",
+    req.body.itemId,
+    " de son panier"
+  );
   let userData = await Users.findOne({ _id: req.user.id });
   if (userData.cartData[req.body.itemId] > 0)
     userData.cartData[req.body.itemId] -= 1;
@@ -377,22 +384,38 @@ app.post("/getcart", fetchUser, async (req, res) => {
 // création d'un schema pour les commandes
 
 const Order = mongoose.model("Order", {
+  id: { type: Number, required: true },
   nameuser: { type: String, required: true },
   nameproduct: { type: String, required: true },
   quantity: { type: Number, required: true },
   totalprice: { type: Number, required: true },
+  date: { type: Date, default: Date.now },
+});
+
+// ajout d'une commande
+app.post("/addorder", async (req, res) => {
+  const order = new Order({
+    id: req.body.id,
+    nameuser: req.body.user,
+    nameproduct: req.body.product,
+    quantity: req.body.quantity,
+    totalprice: req.body.totalprice,
+  });
+  await order.save();
+  console.log("Commande Ajoutée");
+  res.send("Added");
 });
 
 // liste de toutes les commandes
 app.get("/allorders", async (req, res) => {
   let orders = await Order.find({});
-  console.log("All Orders Fetched");
+  console.log("Toutes Les Commandes Récupérées");
   res.send(orders);
 });
 
 app.listen(port, (error) => {
   if (!error) {
-    console.log("Serveur Running on port :" + port);
+    console.log("Serveur fonctionnant sur le port :" + port);
   } else {
     console.log("Error : " + error);
   }

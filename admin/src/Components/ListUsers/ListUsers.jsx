@@ -30,7 +30,7 @@ const ListUsers = () => {
 
   return (
     <div className="list-users">
-      <h1>Liste de tous les utilisareurs</h1>
+      <h1>Liste de tous les utilisateurs</h1>
       <div className="listusers-format-main">
         <p>Nom</p>
         <p>Email</p>
