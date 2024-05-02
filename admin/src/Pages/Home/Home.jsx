@@ -1,8 +1,8 @@
 import "./Home.css";
-import banner_makeup from "../../assets/banner_makeup.gif";
+import banner_makeup from "../../assets/banner_makeup.jpg";
 import banner_visage from "../../assets/pnk.png";
-import banner_champoin from "../../assets/banner_douche.gif";
-import banner_parfum from "../../assets/banner_parfum.gif";
+import banner_champoin from "../../assets/douche_banner.jpg";
+import banner_parfum from "../../assets/parfum_banner.jpg";
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
       <hr />
       <div className="homeadmin-banner">
         <h3>Maquillage de bannière dans le site</h3>
-        <img src={banner_makeup} alt="" />
+        <img src={banner_makeup} alt="" width={500} />
         <hr />
         <h3>Visage de bannière dans le site</h3>
         <img src={banner_visage} alt="" width={500} />
