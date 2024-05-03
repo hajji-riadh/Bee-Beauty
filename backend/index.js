@@ -117,7 +117,7 @@ app.get("/allproducts", async (req, res) => {
 // schéma des utilisateurs
 
 const Users = mongoose.model("Users", {
-  name: { type: String },
+  username: { type: String },
   email: { type: String, unique: true },
   phone: { type: String },
   password: { type: String },
@@ -137,7 +137,7 @@ app.post("/signup", async (req, res) => {
     cart[i] = 0;
   }
   const user = new Users({
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     phone: req.body.phone,
     password: req.body.password,
@@ -379,38 +379,6 @@ app.post("/getcart", fetchUser, async (req, res) => {
   console.log("GetCart");
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
-});
-
-// création d'un schema pour les commandes
-
-const Order = mongoose.model("Order", {
-  id: { type: Number, required: true },
-  nameuser: { type: String, required: true },
-  nameproduct: { type: String, required: true },
-  quantity: { type: Number, required: true },
-  totalprice: { type: Number, required: true },
-  date: { type: Date, default: Date.now },
-});
-
-// ajout d'une commande
-app.post("/addorder", async (req, res) => {
-  const order = new Order({
-    id: req.body.id,
-    nameuser: req.body.user,
-    nameproduct: req.body.product,
-    quantity: req.body.quantity,
-    totalprice: req.body.totalprice,
-  });
-  await order.save();
-  console.log("Commande Ajoutée");
-  res.send("Added");
-});
-
-// liste de toutes les commandes
-app.get("/allorders", async (req, res) => {
-  let orders = await Order.find({});
-  console.log("Toutes Les Commandes Récupérées");
-  res.send(orders);
 });
 
 app.listen(port, (error) => {

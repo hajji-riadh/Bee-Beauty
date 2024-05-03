@@ -6,7 +6,7 @@ import back_icon from "../../assets/back_icon.png";
 
 const AddUser = () => {
   const [userDetails, setUserDetails] = useState({
-    name: "",
+    username: "",
     email: "",
     phone: "",
     password: "",
@@ -51,7 +51,7 @@ const AddUser = () => {
         <p>Nom</p>
         <input
           type="text"
-          value={userDetails.name}
+          value={userDetails.username}
           onChange={changeHandler}
           name="name"
           placeholder="Nom d'utilisateur"
