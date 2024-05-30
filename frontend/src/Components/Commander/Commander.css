@@ -1,0 +1,110 @@
+form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form .cartitems-total-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #5cb85c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #4cae4c;
+}
+
+.cartitems-total {
+  margin-bottom: 20px;
+}
+
+.cartitems-promocode {
+  text-align: center;
+}
+
+.cartitems-promobox {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.cartitems-promobox input {
+  padding: 10px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cartitems-promobox button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #337ab7;
+  color: white;
+  cursor: pointer;
+}
+
+.cartitems-promobox button:hover {
+  background-color: #286090;
+}
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Style pour les options du menu déroulant */
+form select option {
+  padding: 10px;
+}
+
+/* Style pour le focus sur le menu déroulant */
+form select:focus {
+  outline: none;
+  border-color: #5cb85c;
+}
+
+/* Style pour le survol des options */
+form select option:hover {
+  background-color: #f2f2f2;
+}

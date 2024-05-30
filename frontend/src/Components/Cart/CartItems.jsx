@@ -1,11 +1,26 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/cart_cross_icon.png";
+import Commander from "../Commander/Commander";
 
 export const CartItems = () => {
   const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
     useContext(ShopContext);
+  const [checkout, setCheckout] = useState(false);
+  const isUserAuthenticated = () => {
+    const token = localStorage.getItem("auth-token");
+    return token != null;
+  };
+
+  const handleCheckout = () => {
+    if (!isUserAuthenticated()) {
+      alert("Veuillez vous connecter pour passer votre commande");
+    } else if (getTotalCartAmount() > 0) {
+      setCheckout(true);
+    }
+  };
+
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
@@ -49,6 +64,7 @@ export const CartItems = () => {
         }
         return null;
       })}
+      <hr />
       <div className="cartitems-down">
         <div className="cartitems-total">
           <h1>totaux du panier</h1>
@@ -66,7 +82,14 @@ export const CartItems = () => {
               <h3>TND {getTotalCartAmount()}</h3>
             </div>
           </div>
-          <button>PASSEZ À LA CAISSE</button>
+          <button
+            className="btn-commander"
+            type="button"
+            onClick={handleCheckout}
+          >
+            PASSEZ À LA CAISSE
+          </button>
+          {checkout && <Commander />}
         </div>
         <div className="cartitems-promocode">
           <p>Si vous avez un code promo, entrez-le ici</p>
