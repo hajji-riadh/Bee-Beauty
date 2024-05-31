@@ -1,13 +1,17 @@
 import { useState } from "react";
-import "./CSS/Login.css";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
-export const Login = () => {
+const LoginAdmin = ({ setIsAuthenticated }) => {
   const [state, setState] = useState("Connexion");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    phone: "",
     password: "",
+    token: "",
   });
 
   const changeHandler = (e) => {
@@ -18,59 +22,63 @@ export const Login = () => {
   };
 
   const login = async () => {
-    console.log("login executed", formData);
-    let responseData;
-    await fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => (responseData = data));
-    if (responseData.success) {
-      localStorage.setItem("auth-token", responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+    try {
+      const response = await fetch("http://localhost:4000/loginadmin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const responseData = await response.json();
+      if (responseData.success) {
+        localStorage.setItem("beeAdmin", responseData.token);
+        setIsAuthenticated(true);
+        navigate("/");
+      } else {
+        setError("Informations incorrectes. Veuillez réessayer.");
+      }
+    } catch (error) {
+      setError("Une erreur s'est produite lors de la connexion.");
     }
   };
 
-  const signup = async () => {
-    console.log("signup executed", formData);
-    let responseData;
-    await fetch("http://localhost:4000/signup", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => (responseData = data));
-    if (responseData.success) {
-      localStorage.setItem("auth-token", responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
-    }
-  };
+   const signup = async () => {
+     try {
+       const response = await fetch("http://localhost:4000/signupadmin", {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify(formData),
+       });
+       const responseData = await response.json();
+       if (responseData.success) {
+         localStorage.setItem("beeAdmin", responseData.token);
+         setIsAuthenticated(true);
+         navigate("/");
+       } else {
+         setError(responseData.errors.join(", "));
+       }
+     } catch (error) {
+       setError("Une erreur s'est produite lors de l'inscription.");
+     }
+   };
 
   return (
     <div className="loginsignup">
       <div className="loginsignup-container">
         <h1>{state}</h1>
+        {error && <div className="error-message">{error}</div>}
         <div className="loginsignup-fields">
           {state === "S'Inscrire" ? (
             <input
               name="username"
               value={formData.username}
               onChange={changeHandler}
+              autoComplete="off"
               type="text"
-              placeholder="Your Name"
+              placeholder="Votre nom"
             />
           ) : (
             <></>
@@ -79,16 +87,18 @@ export const Login = () => {
             name="email"
             value={formData.email}
             onChange={changeHandler}
+            autoComplete="off"
             type="email"
             placeholder="Email Address"
           />
           {state === "S'Inscrire" ? (
             <input
-              name="number"
-              value={formData.phone}
+              name="token"
+              value={formData.token}
               onChange={changeHandler}
+              autoComplete="off"
               type="text"
-              placeholder="Your number"
+              placeholder="Entrer le code de sécuriter"
             />
           ) : (
             <></>
@@ -97,6 +107,7 @@ export const Login = () => {
             name="password"
             value={formData.password}
             onChange={changeHandler}
+            autoComplete="off"
             type="password"
             placeholder="Password"
           />
@@ -104,6 +115,7 @@ export const Login = () => {
 
         <button
           onClick={() => {
+            setError("votre informations et incorrect !");
             state === "Connexion" ? login() : signup();
           }}
         >
@@ -133,15 +145,9 @@ export const Login = () => {
             </span>
           </p>
         )}
-
-        <div className="loginsignup-agree">
-          <input type="checkbox" name="" id="" />
-          <p>
-            En continuant, j'accepte les conditions d'utilisation et la
-            politique de confidentialité.
-          </p>
-        </div>
       </div>
     </div>
   );
 };
+
+export default LoginAdmin;

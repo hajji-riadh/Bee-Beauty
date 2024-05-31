@@ -2,6 +2,14 @@
   padding: 10px 20px;
 }
 
-.home-admin-footer{
-  
+.navhome{
+  width: 140%;
+  height: 90px;
+}
+
+@media (max-width: 800px) {
+    .navhome {
+        width: 90%;
+        height: 60px;
+    }
 }

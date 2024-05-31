@@ -6,8 +6,8 @@ import navProfile from "../../assets/BeeCoders.png";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <Link to="/"><img src={navlogo} alt="" className="nav-logo" /></Link>
-      <div className="">{` ADMIN `}</div>
+      <Link to="/admin"><img src={navlogo} alt="" className="nav-logo" /></Link>
+      <Link to="/login"><button className="btn_out">Déconnexion</button></Link>
       <img src={navProfile} alt="" className="nav-profile" />
     </div>
   );

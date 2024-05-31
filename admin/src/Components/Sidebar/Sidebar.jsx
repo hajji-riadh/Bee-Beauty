@@ -29,10 +29,10 @@ const Sidebar = () => {
         </div>
       </Link>
 
-      <Link to={"/listorder"} style={{ textDecoration: "none" }}>
+      <Link to={"/listreservation"} style={{ textDecoration: "none" }}>
         <div className="sidebar-item">
           <img src={list_order_icon} alt="" width={30} />
-          <p>Liste des Orders</p>
+          <p>Liste des Réservation</p>
         </div>
       </Link>
     </div>

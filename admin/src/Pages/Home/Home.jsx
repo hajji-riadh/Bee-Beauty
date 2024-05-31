@@ -7,8 +7,8 @@ import banner_parfum from "../../assets/parfum_banner.jpg";
 const Home = () => {
   return (
     <div className="home-admin">
-      <h1>Bienvenue sur le site de l'administration</h1>
-      <h2>Vous pouvez ajouter, supprimer des produits</h2>  
+      <h1>{`Bienvenue sur le site de l'administration`}</h1>
+      <h2>Vous pouvez ajouter, supprimer des produits</h2>
       <h2>Vous pouvez ajouter, modifier et supprimer des utilisateurs</h2>
       <h2>Vous pouvez ajouter, modifier et supprimer des livreurs</h2>
       <hr />

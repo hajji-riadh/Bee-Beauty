@@ -44,7 +44,7 @@ const ListUsers = () => {
           return (
             <>
               <div key={i} className="listusers-format">
-                <p>{user.name}</p>
+                <p>{user.username}</p>
                 <p>{user.email}</p>
                 <p>{user.password}</p>
                 <p>{user.phone}</p>

@@ -23,10 +23,10 @@ const Admin = () => {
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/listproduct" element={<ListProduct />} />
         <Route path="/adduser" element={<AddUser />} />
-        <Route path="/updateuser" element= {<UpdateUser/>}/>
+        <Route path="/updateuser" element={<UpdateUser />} />
         <Route path="/allusers" element={<ListUsers />} />
         <Route path="/adddelivery" element={<AddDelivery />} />
-        <Route path="/updatedelivery" element={<UpdateDelivery />}/>
+        <Route path="/updatedelivery" element={<UpdateDelivery />} />
         <Route path="/listdelivery" element={<ListDelivery />} />
         <Route path="/listorder" element={<ListOrder />} />
       </Routes>

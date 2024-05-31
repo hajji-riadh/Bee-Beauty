@@ -114,9 +114,61 @@ app.get("/allproducts", async (req, res) => {
   res.send(products);
 });
 
+// shéma des admins
+const Admin = mongoose.model("Admin", {
+  username: { type: String },
+  email: { type: String, unique: true },
+  password: { type: String },
+  token: { type: String },
+  date: { type: Date, default: Date.now },
+});
+
+// création d'un api des nouveaux admins
+app.post("/signupadmin", async (req, res) => {
+  let check = await Admin.findOne({ email: req.body.email });
+  if (check) {
+    return res.status(400).json({ success: false, errors: "existant !" });
+  }
+  // Vérifier si le token fourni est correct
+  if (req.body.token !== "beeAdmin") {
+    return res.status(400).json({ success: false, errors: "Code de sécurité invalide !" });
+  }
+  const admin = new Admin({
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  await admin.save();
+  console.log(admin);
+
+  const data = { admin: { id: admin.id } };
+  const token = jwt.sign(data, "beeAdmin");
+  res.json({ success: true, token });
+});
+
+//creation d'un api des admins
+app.post("/loginadmin", async (req, res) => {
+  let admin = await Admin.findOne({ email: req.body.email });
+  if (admin) {
+    const passCompare = req.body.password === admin.password;
+    if (passCompare) {
+      const data = {
+        admin: { id: admin.id },
+      };
+      const token = jwt.sign(data, "beeAdmin");
+      res.json({ success: true, token });
+    } else {
+      res.json({ success: false, errors: "Mot de passe incorrect !" });
+    }
+  } else {
+    res.json({ success: false, errors: "Email incorrect !" });
+  }
+});
+
 // schéma des utilisateurs
 
-const Users = mongoose.model("Users", {
+const Users = mongoose.model("user", {
   username: { type: String },
   email: { type: String, unique: true },
   phone: { type: String },
@@ -125,7 +177,7 @@ const Users = mongoose.model("Users", {
   date: { type: Date, default: Date.now },
 });
 
-// Création d’un point de terminaison pour l’enregistrement des utilisateurs
+// Création d’un point de terminaison pour l’enregistrement des nouveaux utilisateurs
 
 app.post("/signup", async (req, res) => {
   let check = await Users.findOne({ email: req.body.email });
@@ -151,7 +203,7 @@ app.post("/signup", async (req, res) => {
   res.json({ success: true, token });
 });
 
-// Création d’un point de terminaison pour l’enregistrement des nouvelles utilisateurs
+// Création d’un point de terminaison pour l’enregistrement des utilisateurs
 
 app.post("/login", async (req, res) => {
   let user = await Users.findOne({ email: req.body.email });
@@ -178,17 +230,17 @@ app.post("/removeuser", async (req, res) => {
   console.log("Utilisateur supprimé avec email : ", req.body.email);
   res.json({
     success: true,
-    name: req.body.name,
+    name: req.body.username,
   });
 });
 
 // modifier un utilisateur d'après l'email par l'administrateur
 
 app.post("/updateuser", async (req, res) => {
-  let { email, name, phone, password } = req.body;
+  let { email, username, phone, password } = req.body;
   let user = await Users.findOne({ email: email });
   if (user) {
-    user.name = name;
+    user.username = username;
     user.phone = phone;
     user.password = password;
     await user.save();
@@ -339,7 +391,7 @@ const fetchUser = async (req, res, next) => {
 app.post("/addtocart", fetchUser, async (req, res) => {
   let user = await Users.findOne({ _id: req.user.id });
   console.log(
-    user.name,
+    user.username,
     " Ajout du produit avec id :",
     req.body.itemId,
     " dans se panier"

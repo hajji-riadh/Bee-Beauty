@@ -5,7 +5,7 @@ import back_icon from "../../../assets/back_icon.png";
 
 const UpdateUser = () => {
   const [userDetails, setUserDetails] = useState({
-    name: "",
+    username: "",
     email: "",
     phone: "",
     password: "",
@@ -14,7 +14,7 @@ const UpdateUser = () => {
   const changeHandler = (e) => {
     setUserDetails({
       ...userDetails,
-      [e.target.name]: e.target.value,
+      [e.target.username]: e.target.value,
     });
   };
   const Update_user = async () => {
@@ -49,7 +49,7 @@ const UpdateUser = () => {
         <p>Nom</p>
         <input
           type="text"
-          value={userDetails.name}
+          value={userDetails.username}
           onChange={changeHandler}
           name="name"
           placeholder="Nom d'utilisateur"

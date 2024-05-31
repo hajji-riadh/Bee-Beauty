@@ -83,7 +83,7 @@ const AddUser = () => {
           value={userDetails.password}
           onChange={changeHandler}
           name="password"
-          placeholder="Mot de passe de user"
+          placeholder="Mot de passe d'utilisateur"
           pattern="[A-Za-z0-9]{4,}"
           required
         />
