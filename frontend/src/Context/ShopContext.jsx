@@ -73,6 +73,13 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  const updateQuantity = (itemId, quantity) => {
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: quantity,
+    }));
+  };
+
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -100,9 +107,12 @@ const ShopContextProvider = (props) => {
     all_product,
     cartItems,
     addToCart,
+    updateQuantity,
     removeFromCart,
     getTotalCartAmount,
     getTotalCartItems,
+    setCartItems,
+    setAll_Product,
   };
 
   return (

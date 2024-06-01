@@ -1,39 +1,51 @@
 .ListReservation {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 740px;
-  padding: 10px 50px;
-  margin: 30px;
-  border-radius: 6px;
-  background: white;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.ListReservation h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .ListReservation-format-main {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  padding: 20px 0px;
-  color: #454545;
-  font-size: 15px;
-  font-weight: 600;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .ListReservation-format {
-  align-items: center;
-  font-weight: 500;
-}
-
-.ListReservation-format p{
-    margin: 0px 50px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 10px;
 }
 
 .ListReservation-product-icon {
-  height: 80px;
+  width: 50px;
+  height: auto;
 }
 
-.ListReservation-allorders {
-  overflow-y: auto;
+.ListReservation-allorders > div:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.ListReservation-format-main span {
+  font-weight: bold;
+  color: #007bff; 
+}
+
+.ListReservation-format-main.ListReservation-format {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ListReservation-format-main.ListReservation-format > p {
+  margin: 5px 0;
+}
+
+.ListReservation-format-main.ListReservation-format img {
+  object-fit: cover;
+  margin-right: 10px;
 }

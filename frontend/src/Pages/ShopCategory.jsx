@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./CSS/ShopCategory.css";
 import { ShopContext } from "../Context/ShopContext";
 import dropdown_icon from "../Components/Assets/dropdown_icon.png";
@@ -6,6 +6,11 @@ import { Item } from "../Components/Item/Item";
 
 export const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
+    const [visible, setVisible] = useState(12);
+
+    const showMoreItems = () => {
+      setVisible((prevValue) => prevValue + 12);
+    };
   return (
     <div className="shop-category">
       <img className="shopcategory-banner" src={props.banner} alt="" />
@@ -18,11 +23,11 @@ export const ShopCategory = (props) => {
         </div>
       </div>
       <div className="shopcategory-products">
-        {all_product.map((item, i) => {
+        {all_product.slice(0, visible).map((item, i) => {
           if (props.category === item.category) {
             return (
               <Item
-                key={i}
+                key={item.id}
                 id={item.id}
                 name={item.name}
                 image={item.image}
@@ -30,12 +35,15 @@ export const ShopCategory = (props) => {
                 old_price={item.old_price}
               />
             );
-          } else {
-            return null;
           }
+          return null;
         })}
       </div>
-      <div className="shopcategory-loadmore">Explorez Plus</div>
+      {visible < all_product.length && (
+        <button className="shopcategory-loadmore" onClick={showMoreItems}>
+          Explorez Plus
+        </button>
+      )}
     </div>
   );
 };

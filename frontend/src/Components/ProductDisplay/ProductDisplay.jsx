@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
@@ -6,7 +6,16 @@ import { ShopContext } from "../../Context/ShopContext";
 
 export const ProductDisplay = (props) => {
   const { product } = props;
-  const { addToCart, all_product } = useContext(ShopContext);
+  const { addToCart, all_product, updateQuantity } = useContext(ShopContext);
+  const [quantity, setQuantity] = useState(1);
+  const handleQuantityChange = (event) => {
+    setQuantity(event.target.value);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product.id, quantity); 
+    updateQuantity(product.id, product.quantity - quantity);
+  };
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
@@ -41,8 +50,23 @@ export const ProductDisplay = (props) => {
         <div className="productdisplay-right-description">
           {product.description}
         </div>
+        <div>
+          <label htmlFor="quantity-select">Quantité :</label>
+          <select
+            id="quantity-select"
+            value={quantity}
+            onChange={handleQuantityChange}
+          >
+            {Array.from({ length: product.quantity }, (_, index) => (
+              <option key={index + 1} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
+          </select>
+        </div>
         <button
           onClick={() => {
+            handleAddToCart();
             addToCart(product.id);
             all_product.forEach((product) => {
               if (product.id && product.quantity > -1) {

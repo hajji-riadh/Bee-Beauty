@@ -1,15 +1,49 @@
 .home-admin {
-  padding: 10px 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  padding: 2rem;
+  background-color: #f7f7f7;
 }
 
-.navhome{
-  width: 140%;
-  height: 90px;
+.home-admin h1 {
+  color: #5cb85c;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 800px) {
-    .navhome {
-        width: 90%;
-        height: 60px;
-    }
+.home-admin h2 {
+  color: #555;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.homeadmin-banner {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.homeadmin-banner h3 {
+  margin-bottom: 1rem;
+  color: #6c63ff;
+}
+
+.homeadmin-banner img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 768px) {
+  .home-admin h1 {
+    font-size: 1.5rem;
+  }
+
+  .home-admin h2 {
+    font-size: 1.2rem;
+  }
+
+  .homeadmin-banner h3 {
+    font-size: 1.1rem;
+  }
 }

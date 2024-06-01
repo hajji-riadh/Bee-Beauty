@@ -106,6 +106,16 @@ app.post("/removeproduct", async (req, res) => {
   });
 });
 
+// mise à jour d'un produit dans le base de données
+app.post("/updateproduct", async (req, res) => {
+  await Product.findOneAndUpdate({ id: req.body.id }, req.body);
+  console.log("Produit avec id ", req.body.id, " mis à jour");
+  res.json({
+    success: true,
+    name: req.body.name,
+  });
+});
+
 // créer une API pour obtenir tous les produits
 
 app.get("/allproducts", async (req, res) => {

@@ -27,15 +27,6 @@ const ListReservation = () => {
   return (
     <div className="ListReservation">
       <h1>{`Liste des réservations`}</h1>
-      <div className="ListReservation-format-main">
-        <p>Nom de client</p>
-        <p>Nom de produit</p>
-        <p>Image</p>
-        <p>Quantité</p>
-        <p>Prix total</p>
-        <p>Téléphone</p>
-        <p>Date de réservation</p>
-      </div>
       <div className="ListReservation-allorders">
         <hr />
         {users.map((user) => {
@@ -60,17 +51,17 @@ const ListReservation = () => {
                         key={productId}
                         className="ListReservation-format-main ListReservation-format"
                       >
-                        <p>{user.username}</p>
-                        <p>{`${product.name}`}</p>
+                        <p><span>Client :</span>{user.username}</p>
+                        <p><span>Produit : </span>{`${product.name}`}</p>
                         <img
                           src={product.image}
                           alt={product.name}
                           className="ListReservation-product-icon"
                         />
-                        <p>{`${quantity}`}</p>
-                        <p>{`${product.new_price * quantity} TND`}</p>
-                        <p>{user.phone}</p>
-                        <p>{Date.now}</p>
+                        <p><span>Quantité : </span>{`${quantity}`}</p>
+                        <p><span>Total : </span>{`${product.new_price * quantity} TND`}</p>
+                        <p><span>Numéro de téléphone : </span>{user.phone}</p>
+                        <p><span>Date : </span>{new Date().toLocaleDateString("fr-TN")}</p>
                       </div>
                     )
                   );

@@ -1,102 +1,74 @@
 .list-delivery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 740px;
-  padding: 10px 50px;
-  margin: 30px;
-  border-radius: 6px;
-  background: white;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+  padding: 2rem;
 }
 
-.listdelivery-format-main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
-  width: 95%;
-  padding: 20px 0px;
-  color: #454545;
-  font-size: 15px;
-  font-weight: 600;
+.list-delivery h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
+.listdelivery-format-main,
 .listdelivery-format {
-  align-items: center;
-  font-weight: 500;
-}
-
-.listdelivery-format p {
   display: grid;
-  gap: 6px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  padding: 0px 8px;
+  grid-template-columns: repeat(6, 1fr);
+  text-align: center;
+  align-items: center;
 }
 
-.listdelivery-remove-icon {
-  cursor: pointer;
-  margin: auto;
+.listdelivery-format-main p,
+.listdelivery-format p {
+  margin: 0.5rem 0;
 }
 
 .listdelivery-alldelivery {
-  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.adddelivery{
-  display: flex;
-}
-
-.btn-adddelivery{
-  width: 150px;
-  height: 40px;
-  align-items: center;
-  margin-top: 20px;
-  margin-left: 10px;
-  border-radius: 4px;
-  background: #5086eba4;
-  border: none;
-  cursor: pointer;
+.btn-removeuser {
+  padding: 0.5rem 1rem;
+  background-color: #ff6a00;
   color: white;
-  font-size: 16px;
-  font-weight: 200;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.updatedelivery{
-  display: flex;
+.adddelivery,
+.updatedelivery {
+  text-align: center;
+  margin-top: 2rem;
 }
 
+.btn-adddelivery,
 .btn-updatedelivery {
-  width: 150px;
-  height: 40px;
-  align-items: center;
-  margin-top: 20px;
-  margin-left: 10px;
-  border-radius: 4px;
-  background: #50eb77b2;
-  border: none;
-  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background-color: #5cb85c;
   color: white;
-  font-size: 16px;
-  font-weight: 200;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-@media (max-width: 800px) {
-  .list-delivery {
-    box-sizing: border-box;
-    width: 95%;
-    height: 100%;
-    padding: 10px 30px;
-    margin: 20px auto;
+@media only screen and (max-width: 768px) {
+  .listdelivery-format-main,
+  .listdelivery-format {
+    grid-template-columns: 1fr;
   }
 
-  .listdelivery-format-main {
-    padding: 15px 0px;
-    color: #454545;
-    font-size: 12px;
-  }
   .listdelivery-format p {
-    display: grid;
-    column-gap: 8px;
+    padding: 0.5rem;
+  }
+
+  .btn-removeuser,
+  .btn-adddelivery,
+  .btn-updatedelivery {
+    width: 100%;
+    margin: 0.5rem 0;
   }
 }

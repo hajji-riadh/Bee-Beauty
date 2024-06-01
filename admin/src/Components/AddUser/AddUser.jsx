@@ -53,7 +53,7 @@ const AddUser = () => {
           type="text"
           value={userDetails.username}
           onChange={changeHandler}
-          name="name"
+          name="username"
           placeholder="Nom d'utilisateur"
           pattern="[A-Za-z0-9]{3,}"
           required
