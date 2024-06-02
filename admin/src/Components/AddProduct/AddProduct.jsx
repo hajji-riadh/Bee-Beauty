@@ -5,21 +5,38 @@ import { Link } from "react-router-dom";
 import back_icon from "../../assets/back_icon.png";
 
 const AddProduct = () => {
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(null);
+  const [imgdesc1, setImgdesc1] = useState(null);
+  const [imgdesc2, setImgdesc2] = useState(null);
+  const [imgdesc3, setImgdesc3] = useState(null);
+  const [imgdesc4, setImgdesc4] = useState(null);
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
+    imgdesc1: "",
+    imgdesc2: "",
+    imgdesc3: "",
+    imgdesc4: "",
     category: "makeup",
     quantity: "",
     new_price: "",
     old_price: "",
     description: "",
   });
-
   const imageHandler = (e) => {
-    setImage(e.target.files[0]);
+    const { name, files } = e.target;
+    if (name === "image") {
+      setImage(files[0]);
+    } else if (name === "imgdesc1") {
+      setImgdesc1(files[0]);
+    } else if (name === "imgdesc2") {
+      setImgdesc2(files[0]);
+    } else if (name === "imgdesc3") {
+      setImgdesc3(files[0]);
+    } else if (name === "imgdesc4") {
+      setImgdesc4(files[0]);
+    }
   };
-
   const changeHandler = (e) => {
     setProductDetails({
       ...productDetails,
@@ -27,41 +44,74 @@ const AddProduct = () => {
     });
   };
 
-  const Add_Product = async () => {
-    console.log(productDetails);
-    let responseData;
-    let product = productDetails;
-    let formData = new FormData();
-    formData.append("product", image);
-    await fetch("http://localhost:4000/upload", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: formData,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        responseData = data;
-      });
+const Add_Product = async () => {
+  console.log(productDetails);
+  let product = productDetails;
+  let formData = new FormData();
+  formData.append("image", image);
+  formData.append("imgdesc1", imgdesc1);
+  formData.append("imgdesc2", imgdesc2);
+  formData.append("imgdesc3", imgdesc3);
+  formData.append("imgdesc4", imgdesc4);
 
-    if (responseData.success) {
-      product.image = responseData.image_url;
-      console.log(product);
-      await fetch("http://localhost:4000/addproduct", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-      })
-        .then((resp) => resp.json())
-        .then((data) => {
-          data.success ? alert("Product added") : alert("Failed");
-        });
+  try {
+    const uploadResponse = await fetch("http://localhost:4000/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!uploadResponse.ok) {
+      const errorText = await uploadResponse.text();
+      console.error("Upload failed:", errorText);
+      alert("Le téléchargement des images a échoué.");
+      return;
     }
-  };
+
+    const uploadData = await uploadResponse.json();
+
+    if (uploadData.success) {
+      product.image = uploadData.images.image;
+      product.imgdesc1 = uploadData.images.imgdesc1;
+      product.imgdesc2 = uploadData.images.imgdesc2;
+      product.imgdesc3 = uploadData.images.imgdesc3;
+      product.imgdesc4 = uploadData.images.imgdesc4;
+
+      const addProductResponse = await fetch(
+        "http://localhost:4000/addproduct",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        }
+      );
+
+      if (!addProductResponse.ok) {
+        const errorText = await addProductResponse.text();
+        console.error("Add product failed:", errorText);
+        alert("L'ajout du produit a échoué.");
+        return;
+      }
+
+      const addProductData = await addProductResponse.json();
+
+      if (addProductData.success) {
+        alert("Produit ajouté avec succès.");
+      } else {
+        alert("Erreur lors de l'ajout du produit: " + addProductData.message);
+      }
+    } else {
+      alert("Erreur lors du téléchargement des images: " + uploadData.message);
+    }
+  } catch (error) {
+    console.error("Erreur:", error);
+    alert(
+      "Une erreur s'est produite, veuillez vérifier votre connexion et réessayer."
+    );
+  }
+};
+
 
   return (
     <div className="add-product">
@@ -82,7 +132,6 @@ const AddProduct = () => {
           required
         />
       </div>
-
       <div className="addproduct-price">
         <div className="addproduct-itemfield">
           <p>Prix</p>
@@ -108,7 +157,6 @@ const AddProduct = () => {
           />
         </div>
       </div>
-
       <div className="addproduct-itemfield">
         <p>Categorie de Produit</p>
         <select
@@ -132,7 +180,6 @@ const AddProduct = () => {
           required
         />
       </div>
-
       <div className="addproduct-itemfield">
         <label htmlFor="file-input">
           <img
@@ -149,7 +196,69 @@ const AddProduct = () => {
           hidden
         />
       </div>
-
+      <p>Image Description</p>
+      <div className="addproduct-imgdesc">
+        {/* Image Description 1 */}
+        <label htmlFor="imgdesc1-input">
+          <img
+            src={imgdesc1 ? URL.createObjectURL(imgdesc1) : upload_area}
+            alt="Image Description 1"
+            className="addproduct-thumnail-img"
+          />
+        </label>
+        <input
+          onChange={imageHandler}
+          type="file"
+          name="imgdesc1"
+          id="imgdesc1-input"
+          hidden
+        />
+        {/* Image Description 2 */}
+        <label htmlFor="imgdesc2-input">
+          <img
+            src={imgdesc2 ? URL.createObjectURL(imgdesc2) : upload_area}
+            alt="Image Description 2"
+            className="addproduct-thumnail-img"
+          />
+        </label>
+        <input
+          onChange={imageHandler}
+          type="file"
+          name="imgdesc2"
+          id="imgdesc2-input"
+          hidden
+        />
+        {/* Image Description 3 */}
+        <label htmlFor="imgdesc3-input">
+          <img
+            src={imgdesc3 ? URL.createObjectURL(imgdesc3) : upload_area}
+            alt="Image Description 3"
+            className="addproduct-thumnail-img"
+          />
+        </label>
+        <input
+          onChange={imageHandler}
+          type="file"
+          name="imgdesc3"
+          id="imgdesc3-input"
+          hidden
+        />
+        {/* Image Description 4 */}
+        <label htmlFor="imgdesc4-input">
+          <img
+            src={imgdesc4 ? URL.createObjectURL(imgdesc4) : upload_area}
+            alt="Image Description 4"
+            className="addproduct-thumnail-img"
+          />
+        </label>
+        <input
+          onChange={imageHandler}
+          type="file"
+          name="imgdesc4"
+          id="imgdesc4-input"
+          hidden
+        />
+      </div>
       <div className="addproduct-itemfield-desc">
         <p>Description de Produit</p>
         <input
@@ -162,7 +271,6 @@ const AddProduct = () => {
           required
         />
       </div>
-
       <button
         onClick={() => {
           Add_Product();
@@ -174,5 +282,4 @@ const AddProduct = () => {
     </div>
   );
 };
-
 export default AddProduct;

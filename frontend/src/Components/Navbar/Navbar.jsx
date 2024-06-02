@@ -89,6 +89,7 @@ export const Navbar = () => {
       <div className="nav-login-cart">
         {localStorage.getItem("auth-token") ? (
           <button
+            className="nav-login-cart-btn"
             onClick={() => {
               localStorage.removeItem("auth-token");
               window.location.replace("/");
@@ -98,7 +99,7 @@ export const Navbar = () => {
           </button>
         ) : (
           <Link style={{ textDecoration: "none" }} to="/login">
-            <button>Se connecter</button>
+            <button className="nav-login-cart-btn">Se connecter</button>
           </Link>
         )}
 

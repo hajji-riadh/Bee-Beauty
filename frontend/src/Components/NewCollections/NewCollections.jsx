@@ -18,7 +18,6 @@ export const NewCollections = () => {
       <h1>NOUVELLES COLLECTIONS</h1>
       <hr />
       <div className="collections">
-        {" "}
         {new_collection.map((item, i) => {
           return (
             <Item

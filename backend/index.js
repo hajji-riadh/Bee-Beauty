@@ -23,7 +23,6 @@ app.get("/", (req, res) => {
 });
 
 // moteur de stockage d'images
-
 const storage = multer.diskStorage({
   destination: "./upload/images",
   filename: (req, file, cb) => {
@@ -36,22 +35,56 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// création d'un point de terminaison de téléchargement pour les images
-
+// Création d'un point de terminaison de téléchargement pour les images
 app.use("/images", express.static("upload/images"));
-app.post("/upload", upload.single("product"), (req, res) => {
-  res.json({
-    success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`,
-  });
-});
+
+app.post(
+  "/upload",
+  upload.fields([
+    { name: "image" },
+    { name: "imgdesc1" },
+    { name: "imgdesc2" },
+    { name: "imgdesc3" },
+    { name: "imgdesc4" },
+  ]),
+  (req, res) => {
+    // Créez un objet pour stocker les URLs des images
+    const imageUrls = {
+      image: req.files["image"]
+        ? `http://localhost:${port}/images/${req.files["image"][0].filename}`
+        : null,
+      imgdesc1: req.files["imgdesc1"]
+        ? `http://localhost:${port}/images/${req.files["imgdesc1"][0].filename}`
+        : null,
+      imgdesc2: req.files["imgdesc2"]
+        ? `http://localhost:${port}/images/${req.files["imgdesc2"][0].filename}`
+        : null,
+      imgdesc3: req.files["imgdesc3"]
+        ? `http://localhost:${port}/images/${req.files["imgdesc3"][0].filename}`
+        : null,
+      imgdesc4: req.files["imgdesc4"]
+        ? `http://localhost:${port}/images/${req.files["imgdesc4"][0].filename}`
+        : null,
+    };
+
+    // Répondez avec succès et les URLs des images
+    res.json({
+      success: 1,
+      images: imageUrls,
+    });
+  }
+);
 
 // schéma de création des produits
 
 const Product = mongoose.model("Product", {
-  id: { type: Number, required: true },
+  id: { type: Number },
   name: { type: String, required: true },
   image: { type: String, required: true },
+  imgdesc1: { type: String },
+  imgdesc2: { type: String },
+  imgdesc3: { type: String },
+  imgdesc4: { type: String },
   category: { type: String, required: true },
   quantity: { type: Number, required: true },
   new_price: { type: Number, required: true },
@@ -64,35 +97,46 @@ const Product = mongoose.model("Product", {
 //ajouter un produit à la base de données
 
 app.post("/addproduct", async (req, res) => {
-  let products = await Product.find({});
+  try {
+    let products = await Product.find({});
 
-  let id;
+    let id;
 
-  if (products.length > 0) {
-    let last_product_array = products.slice(-1);
-    let last_product = last_product_array[0];
-    id = last_product.id + 1;
-  } else {
-    id = 1;
+    if (products.length > 0) {
+      let last_product_array = products.slice(-1);
+      let last_product = last_product_array[0];
+      id = last_product.id + 1;
+    } else {
+      id = 1;
+    }
+    const product = new Product({
+      id: id,
+      name: req.body.name,
+      image: req.body.image,
+      imgdesc1: req.body.imgdesc1,
+      imgdesc2: req.body.imgdesc2,
+      imgdesc3: req.body.imgdesc3,
+      imgdesc4: req.body.imgdesc4,
+      category: req.body.category,
+      quantity: req.body.quantity,
+      new_price: req.body.new_price,
+      old_price: req.body.old_price,
+      description: req.body.description,
+    });
+    console.log(product);
+    await product.save();
+    res.json({
+      success: true,
+      message: `Produit avec le nom : ${product.name}, enregistré.`,
+    });
+    console.log("Produit avec le nom : ", product.name, " enregistré");
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Une erreur s'est produite lors de l'enregistrement du produit.",
+      error: error.message,
+    });
   }
-
-  const product = new Product({
-    id: id,
-    name: req.body.name,
-    image: req.body.image,
-    category: req.body.category,
-    quantity: req.body.quantity,
-    new_price: req.body.new_price,
-    old_price: req.body.old_price,
-    description: req.body.description,
-  });
-  console.log(product);
-  await product.save();
-  res.json({
-    success: true,
-    name: req.body.name,
-  });
-  console.log("Produit avec le nom : ", product.name, ", enregistré.");
 });
 
 // créer une API pour supprimer des produits
@@ -100,16 +144,6 @@ app.post("/addproduct", async (req, res) => {
 app.post("/removeproduct", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
   console.log("Produit avec id ", req.body.id, " supprimé");
-  res.json({
-    success: true,
-    name: req.body.name,
-  });
-});
-
-// mise à jour d'un produit dans le base de données
-app.post("/updateproduct", async (req, res) => {
-  await Product.findOneAndUpdate({ id: req.body.id }, req.body);
-  console.log("Produit avec id ", req.body.id, " mis à jour");
   res.json({
     success: true,
     name: req.body.name,
@@ -141,7 +175,9 @@ app.post("/signupadmin", async (req, res) => {
   }
   // Vérifier si le token fourni est correct
   if (req.body.token !== "beeAdmin") {
-    return res.status(400).json({ success: false, errors: "Code de sécurité invalide !" });
+    return res
+      .status(400)
+      .json({ success: false, errors: "Code de sécurité invalide !" });
   }
   const admin = new Admin({
     username: req.body.username,

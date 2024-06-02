@@ -17,12 +17,13 @@
 }
 
 .productdisplay-img-list img {
-  height: 133px;
+  height: 100px;
 }
 
 .productdisplay-main-img {
-  width: 506px;
-  height: 600px;
+  width: 406px;
+  height: 500px;
+  border-color: #3d3d3d;
   transition: transform 0.2s;
 }
 

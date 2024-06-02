@@ -8,9 +8,14 @@ export const ProductDisplay = (props) => {
   const { product } = props;
   const { addToCart, all_product, updateQuantity } = useContext(ShopContext);
   const [quantity, setQuantity] = useState(1);
+  const [mainImage, setMainImage] = useState(product.image);
+
   const handleQuantityChange = (event) => {
     setQuantity(event.target.value);
   };
+    const updateMainImage = (newImage) => {
+      setMainImage(newImage);
+    };
 
   const handleAddToCart = () => {
     addToCart(product.id, quantity); 
@@ -19,14 +24,37 @@ export const ProductDisplay = (props) => {
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
+        {/* Liste des images de description */}
         <div className="productdisplay-img-list">
-          <img src={product.image} alt="" />
-          <img src={product.image} alt="" />
-          <img src={product.image} alt="" />
-          <img src={product.image} alt="" />
+          <img
+            src={product.imgdesc1}
+            alt=""
+            onClick={() => updateMainImage(product.imgdesc1)}
+          />
+          <img
+            src={product.imgdesc2}
+            alt=""
+            onClick={() => updateMainImage(product.imgdesc2)}
+          />
+          <img
+            src={product.imgdesc3}
+            alt=""
+            onClick={() => updateMainImage(product.imgdesc3)}
+          />
+          <img
+            src={product.imgdesc4}
+            alt=""
+            onClick={() => updateMainImage(product.imgdesc4)}
+          />
         </div>
         <div className="productdisplay-img">
-          <img className="productdisplay-main-img" src={product.image} alt="" />
+          {/* utiliser l'image principale pour afficher */}
+          <img
+            className="productdisplay-main-img"
+            src={mainImage}
+            alt=""
+            width={40}
+          />
         </div>
       </div>
       <div className="productdisplay-right">
@@ -50,7 +78,7 @@ export const ProductDisplay = (props) => {
         <div className="productdisplay-right-description">
           {product.description}
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="quantity-select">Quantité :</label>
           <select
             id="quantity-select"
@@ -63,7 +91,7 @@ export const ProductDisplay = (props) => {
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
         <button
           onClick={() => {
             handleAddToCart();
