@@ -73,6 +73,9 @@ h1 {
 }
 
 @media (max-width: 768px) {
+    .lostorders {
+    grid-template-columns: 1fr;
+  }
   .listorder-details {
     padding: 15px;
   }
