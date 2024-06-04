@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Commander.css";
+import { ShopContext } from "../../Context/ShopContext";
 
 const Commander = () => {
+  const { updateQuantity } = useContext(ShopContext);
   const [order, setOrder] = useState({
-    nom: "",
-    prenom: "",
-    adresse: "",
-    ville: "",
-    codePostal: "",
-    numeroTelephone: "",
+    fname: "",
+    lname: "",
+    address: "",
+    city: "",
+    Postcode: "",
+    phone: "",
     email: "",
     remarques: "",
   });
@@ -64,7 +66,6 @@ const Commander = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ici, vous pouvez gérer la soumission du formulaire, par exemple en envoyant les données à un serveur
     console.log(order);
   };
 
@@ -77,7 +78,7 @@ const Commander = () => {
           <input
             type="text"
             name="nom"
-            value={order.nom}
+            value={order.fname}
             onChange={handleChange}
             required
           />
@@ -87,7 +88,7 @@ const Commander = () => {
           <input
             type="text"
             name="prenom"
-            value={order.prenom}
+            value={order.lname}
             onChange={handleChange}
             required
           />
@@ -97,7 +98,7 @@ const Commander = () => {
           <input
             type="text"
             name="adresse"
-            value={order.adresse}
+            value={order.address}
             onChange={handleChange}
             required
           />
@@ -105,7 +106,7 @@ const Commander = () => {
         <label>
           <select
             name="ville"
-            value={order.ville}
+            value={order.city}
             onChange={handleVillesChange}
             required
           >
@@ -121,7 +122,7 @@ const Commander = () => {
           <input
             type="text"
             name="codePostal"
-            value={order.codePostal}
+            value={order.Postcode}
             onChange={handleChange}
             required
           />
@@ -131,7 +132,7 @@ const Commander = () => {
           <input
             type="tel"
             name="numeroTelephone"
-            value={order.numeroTelephone}
+            value={order.phone}
             onChange={handleChange}
             required
           />
@@ -154,7 +155,14 @@ const Commander = () => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Confirmer la commande</button>
+        <button
+          onClick={() => {
+            updateQuantity();
+          }}
+          type="submit"
+        >
+          Confirmer la commande
+        </button>
       </form>
     </div>
   );

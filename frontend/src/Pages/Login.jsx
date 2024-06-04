@@ -84,7 +84,7 @@ export const Login = () => {
           />
           {state === "S'Inscrire" ? (
             <input
-              name="number"
+              name="phone"
               value={formData.phone}
               onChange={changeHandler}
               type="text"

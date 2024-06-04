@@ -6,20 +6,16 @@ import { ShopContext } from "../../Context/ShopContext";
 
 export const ProductDisplay = (props) => {
   const { product } = props;
-  const { addToCart, all_product, updateQuantity } = useContext(ShopContext);
-  const [quantity, setQuantity] = useState(1);
+  const { addToCart, all_product } = useContext(ShopContext);
   const [mainImage, setMainImage] = useState(product.image);
-
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
-  };
     const updateMainImage = (newImage) => {
       setMainImage(newImage);
     };
-
   const handleAddToCart = () => {
-    addToCart(product.id, quantity); 
-    updateQuantity(product.id, product.quantity - quantity);
+    addToCart(product.id);
+    if(product.quantity === 0){
+      alert("Product is out of stock")
+    }
   };
   return (
     <div className="productdisplay">
@@ -77,35 +73,21 @@ export const ProductDisplay = (props) => {
         </div>
         <div className="productdisplay-right-description">
           {product.description}
-        </div>
-        {/* <div>
-          <label htmlFor="quantity-select">Quantité :</label>
-          <select
-            id="quantity-select"
-            value={quantity}
-            onChange={handleQuantityChange}
-          >
-            {Array.from({ length: product.quantity }, (_, index) => (
-              <option key={index + 1} value={index + 1}>
-                {index + 1}
-              </option>
-            ))}
-          </select>
-        </div> */}
-        <button
-          onClick={() => {
-            handleAddToCart();
-            addToCart(product.id);
-            all_product.forEach((product) => {
+        </div>           
+      <button
+        onClick={()=> {
+          handleAddToCart()
+           all_product.forEach((product) => {
               if (product.id && product.quantity > -1) {
                 product.quantity -= 1;
                 console.log(product.quantity);
               }
             });
-          }}
-        >
-          AJOUTER AU PANIER
-        </button>
+        }}
+        disabled={product.quantity === 0}
+      >
+        {product.quantity > 0 ? "AJOUTER AU PANIER" : "RUPTURE DE STOCK"}
+      </button>
         <p className="productdisplay-right-category">
           <span>Catégorie :</span> {product.category}
         </p>

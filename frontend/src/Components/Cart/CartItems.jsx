@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/cart_cross_icon.png";
-import Commander from "../Commander/Commander";
 
 export const CartItems = () => {
   const {
@@ -10,20 +9,19 @@ export const CartItems = () => {
     cartItems,
     addToCart,
     removeFromCart,
+    emptyCart,
     getTotalCartAmount,
+    getQuantityProduct,
   } = useContext(ShopContext);
   const [checkout, setCheckout] = useState(false);
-
   const incrementQuantity = (productId) => {
     addToCart(productId, 1);
   };
-
   const isUserAuthenticated = () => {
     const token = localStorage.getItem("auth-token");
     return token != null;
   };
-
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!isUserAuthenticated()) {
       alert("Veuillez vous connecter pour passer votre commande");
     } else if (Object.keys(cartItems).length === 0) {
@@ -32,6 +30,142 @@ export const CartItems = () => {
       setCheckout(true);
     }
   };
+  const [orderForm, setOrderForm] = useState({
+    fname: "",
+    lname: "",
+    address: "",
+    city: "",
+    Postcode: "",
+    phone: "",
+    email: "",
+    remarques: "",
+    product: [],
+    total: getTotalCartAmount(),
+  });
+  useEffect(() => {
+    const cartToOrderProducts = () => {
+      return Object.entries(cartItems)
+        .filter(([id, quantity]) => quantity > 0)
+        .map(([id, { quantity }]) => {
+          const product = all_product.find(
+            (product) => product.id.toString() === id
+          );
+          if (!product) {
+            console.error(
+              `Produit avec l'id ${id} n'a pas été trouvé dans all_product`
+            );
+            return null;
+          }
+          return {
+            id: product.id,
+            name: product.name,
+            quantity: getQuantityProduct(id),
+            price: product.new_price,
+            image: product.image,
+          };
+        })
+        .filter(Boolean); // Filtre les valeurs nulles
+    };
+    if (Object.keys(cartItems).length > 0) {
+      setOrderForm((prevForm) => ({
+        ...prevForm,
+        product: cartToOrderProducts(),
+        total: getTotalCartAmount(),
+      }));
+    }
+  }, [cartItems, all_product, getTotalCartAmount, getQuantityProduct]);
+  const handleInputChange = (e) => {
+    setOrderForm({ ...orderForm, [e.target.name]: e.target.value });
+  };
+const handleOrderSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!isUserAuthenticated()) {
+    return alert("Veuillez vous connecter pour passer votre commande");
+  }
+
+  if (Object.keys(cartItems).length === 0) {
+    return alert("Votre panier est vide !");
+  }
+
+  try {
+    const productsForOrder = Object.entries(cartItems)
+      .map(([id, quantity]) => {
+        const product = all_product.find((p) => p.id.toString() === id);
+        if (!product) {
+          console.error(
+            `Produit avec l'id ${id} n'a pas été trouvé dans all_product`
+          );
+          return null;
+        }
+        return {
+          id: product.id,
+          quantity: quantity,
+        };
+      })
+      .filter(Boolean);
+
+    // Mise à jour de la quantité des produits
+    const updatePromises = productsForOrder.map(async (product) => {
+      const updatedQuantity =
+        all_product.find((p) => p.id.toString() === product.id.toString())
+          .quantity - product.quantity;
+
+      const updateResponse = await fetch(
+        "http://localhost:4000/updateproduct",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: product.id,
+            quantity: updatedQuantity,
+          }),
+        }
+      );
+
+      if (!updateResponse.ok) {
+        throw new Error("Erreur lors de la mise à jour des quantités");
+      }
+    });
+
+    await Promise.all(updatePromises);
+
+    // Ajout de la commande
+    const addOrderResponse = await fetch("http://localhost:4000/addorder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderForm),
+    });
+
+    if (!addOrderResponse.ok) {
+      throw new Error("Erreur lors de la commande");
+    }
+
+    // Confirmation de la commande
+    const orderConfirmation = await addOrderResponse.json();
+    alert("Commande effectuée avec succès !");
+    console.log("Commande effectuée avec succès :", orderConfirmation);
+
+    // Réinitialisation du panier et du formulaire
+    emptyCart();
+    setCheckout(false);
+    setOrderForm({
+      fname: "",
+      lname: "",
+      address: "",
+      city: "",
+      Postcode: "",
+      phone: "",
+      email: "",
+      remarques: "",
+      product: [],
+      total: 0,
+    });
+  } catch (error) {
+    console.error(error);
+    alert("Erreur: " + error.message);
+  }
+};
 
   return (
     <div className="cartitems">
@@ -45,7 +179,8 @@ export const CartItems = () => {
       </div>
       <hr />
       {all_product.map((product) => {
-        if (cartItems[product.id] > 0) {
+        const productQuantity = cartItems[product.id];
+        if (productQuantity > 0) {
           return (
             <div key={product.id} className="cartitems-format">
               <img
@@ -62,10 +197,10 @@ export const CartItems = () => {
                 >
                   -
                 </button>
-                <span>{cartItems[product.id]}</span>
+                <span>{productQuantity}</span>
                 <button onClick={() => incrementQuantity(product.id)}>+</button>
               </div>
-              <p>TND {product.new_price * cartItems[product.id]}</p>
+              <p>TND {product.new_price * productQuantity}</p>
               <img
                 className="carticon-remove-icon"
                 src={remove_icon}
@@ -102,7 +237,69 @@ export const CartItems = () => {
           >
             PASSEZ À LA CAISSE
           </button>
-          {checkout && <Commander />}
+          {checkout ? (
+            <form onSubmit={handleOrderSubmit} className="form-container">
+              <input
+                type="text"
+                name="fname"
+                placeholder="Prénom"
+                value={orderForm.fname}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="lname"
+                placeholder="Nom"
+                value={orderForm.lname}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder="Adresse"
+                value={orderForm.address}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="city"
+                placeholder="Ville"
+                value={orderForm.city}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="Postcode"
+                placeholder="Code Postal"
+                value={orderForm.Postcode}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="phone"
+                placeholder="Téléphone"
+                value={orderForm.phone}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={orderForm.email}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="remarques"
+                placeholder="Remarques"
+                value={orderForm.remarques}
+                onChange={handleInputChange}
+              />
+              <button type="submit">Commander</button>
+            </form>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

@@ -1,147 +1,122 @@
+/* Styles de base pour le panier */
 .cartitems {
-  font-family: "Arial", sans-serif;
-  color: #333;
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
 }
 
-.cartitems-format-main {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  text-align: center;
-  padding: 1rem;
-  background-color: #f8f8f8;
-  border-bottom: 2px solid #eaeaea;
-}
-
-.cartitems-format-main p {
-  margin: 0;
-  font-weight: bold;
-  color: #555;
-}
-
+.cartitems-format-main,
 .cartitems-format {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #eaeaea;
+  padding: 10px 0;
 }
 
+.cartitems-format-main p,
 .cartitems-format p {
-  display: flex;
-  justify-content: center;
+  flex: 1;
+  text-align: center;
 }
 
-.cartitems-format img {
-  display: flex;
-  justify-content: center;
-}
-
-.carticon-product-icon {
-  width: 80px;
-  height: auto;
-}
-
+.carticon-product-icon,
 .carticon-remove-icon {
+  width: 50px;
+  height: auto;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.DecrimentQuantity,
+.quantity-controls button {
+  margin: 0 5px;
 }
 
 .cartitems-total {
-  padding: 1rem;
-  text-align: right;
+  text-align: center;
+}
+
+.cartitems-total h1,
+.cartitems-total-item h3 {
+  margin-bottom: 10px;
 }
 
 .cartitems-total-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin: 0.5rem 0;
+  margin-bottom: 5px;
 }
 
 .btn-commander {
-  padding: 0.8rem 2rem;
-  background-color: #5ca3b8;
+  background-color: #007bff;
   color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
 .btn-commander:hover {
-  background-color: #89ca89;
-}
-
-.quantity-controls span {
-  display: flex;
-  justify-content: center;
-}
-
-.DecrimentQuantity {
-  padding: 0.8rem 2rem;
-  background-color: #a13737;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.cartitems-promocode {
-  padding: 1rem;
-  border-top: 1px solid #eaeaea;
-}
-
-.cartitems-promobox {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 0.5rem;
-}
-
-.cartitems-promobox input {
-  flex: 1;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  margin-right: 0.5rem;
-}
-
-.cartitems-promobox button {
-  padding: 0.8rem 1.6rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.cartitems-promobox button:hover {
   background-color: #0056b3;
 }
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-@media only screen and (max-width: 768px) {
+input[type="text"],
+button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Assure que padding et border sont inclus dans la largeur */
+}
+
+button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4cae4c;
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
   .cartitems-format-main,
   .cartitems-format {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .cartitems-total-item,
-  .cartitems-promobox {
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .cartitems-promobox input,
-  .cartitems-promobox button {
-    width: 100%;
-    margin: 0.5rem 0;
+  .cartitems-format-main p,
+  .cartitems-format p {
+    text-align: left;
+  }
+
+  .cartitems-total-item {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .carticon-product-icon,
+  .carticon-remove-icon {
+    width: 40px;
+  }
+
+  .btn-commander {
+    padding: 8px 16px;
   }
 }

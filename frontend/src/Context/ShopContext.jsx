@@ -72,13 +72,59 @@ const ShopContextProvider = (props) => {
         .then((data) => console.log(data));
     }
   };
+const getQuantityProduct = (productId) => {
+  return cartItems[productId];
+};
 
-  const updateQuantity = (itemId, quantity) => {
-    setCartItems((prev) => ({
-      ...prev,
-      [itemId]: quantity,
-    }));
+  const emptyCart = () => {
+    setCartItems({});
+    // Envoyer une requête pour vider le panier dans la base de données
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/emptycart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) =>
+          console.error("Erreur lors de la vidange du panier:", error)
+        );
+    }
   };
+
+const updateQuantity = async (productId, newQuantity) => {
+  try {
+    const response = await fetch("http://localhost:4000/updateproduct", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: productId,
+        quantity: newQuantity,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        "Erreur lors de la mise à jour de la quantité du produit"
+      );
+    }
+
+    const data = await response.json();
+    console.log("Quantité du produit mise à jour avec succès :", data);
+
+    // Mettre à jour localement la quantité du produit dans le panier ou ailleurs si nécessaire
+  } catch (error) {
+    console.error(error);
+    // Gérer les erreurs
+  }
+};
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
@@ -109,8 +155,10 @@ const ShopContextProvider = (props) => {
     addToCart,
     updateQuantity,
     removeFromCart,
+    emptyCart,
     getTotalCartAmount,
     getTotalCartItems,
+    getQuantityProduct,
     setCartItems,
     setAll_Product,
   };
