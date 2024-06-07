@@ -13,7 +13,6 @@ const getDefaultCart = () => {
 const ShopContextProvider = (props) => {
   const [all_product, setAll_Product] = useState([]);
   const [cartItems, setCartItems] = useState(getDefaultCart());
-
   useEffect(() => {
     fetch("http://localhost:4000/allproducts")
       .then((response) => response.json())
@@ -32,7 +31,6 @@ const ShopContextProvider = (props) => {
         .then((data) => setCartItems(data));
     }
   }, []);
-
   const addToCart = (itemId) => {
     setCartItems((prev) => ({
       ...prev,
@@ -52,7 +50,6 @@ const ShopContextProvider = (props) => {
         .then((data) => console.log(data));
     }
   };
-
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({
       ...prev,
@@ -72,60 +69,6 @@ const ShopContextProvider = (props) => {
         .then((data) => console.log(data));
     }
   };
-const getQuantityProduct = (productId) => {
-  return cartItems[productId];
-};
-
-  const emptyCart = () => {
-    setCartItems({});
-    // Envoyer une requête pour vider le panier dans la base de données
-    if (localStorage.getItem("auth-token")) {
-      fetch("http://localhost:4000/emptycart", {
-        method: "POST",
-        headers: {
-          Accept: "application/form-data",
-          "auth-token": `${localStorage.getItem("auth-token")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) =>
-          console.error("Erreur lors de la vidange du panier:", error)
-        );
-    }
-  };
-
-const updateQuantity = async (productId, newQuantity) => {
-  try {
-    const response = await fetch("http://localhost:4000/updateproduct", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: productId,
-        quantity: newQuantity,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        "Erreur lors de la mise à jour de la quantité du produit"
-      );
-    }
-
-    const data = await response.json();
-    console.log("Quantité du produit mise à jour avec succès :", data);
-
-    // Mettre à jour localement la quantité du produit dans le panier ou ailleurs si nécessaire
-  } catch (error) {
-    console.error(error);
-    // Gérer les erreurs
-  }
-};
-
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -138,6 +81,9 @@ const updateQuantity = async (productId, newQuantity) => {
     }
     return totalAmount;
   };
+  const getQuantityProduct = (productId) => {
+    return cartItems[productId];
+  };
 
   const getTotalCartItems = () => {
     let totalItem = 0;
@@ -149,20 +95,36 @@ const updateQuantity = async (productId, newQuantity) => {
     return totalItem;
   };
 
+    const emptyCart = () => {
+      setCartItems({});
+      // Envoyer une requête pour vider le panier dans la base de données
+      if (localStorage.getItem("auth-token")) {
+        fetch("http://localhost:4000/emptycart", {
+          method: "POST",
+          headers: {
+            Accept: "application/form-data",
+            "auth-token": `${localStorage.getItem("auth-token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) =>
+            console.error("Erreur lors de la vidange du panier:", error)
+          );
+      }
+    };
   const contextValue = {
     all_product,
+    getQuantityProduct,
     cartItems,
     addToCart,
-    updateQuantity,
     removeFromCart,
     emptyCart,
     getTotalCartAmount,
     getTotalCartItems,
-    getQuantityProduct,
-    setCartItems,
-    setAll_Product,
   };
-
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}

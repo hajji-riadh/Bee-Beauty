@@ -3,8 +3,9 @@ import "./ListOrder.css";
 
 const ListOrder = () => {
   const [allOrders, setAllOrders] = useState([]);
-    const [undeliveredOrders, setUndeliveredOrders] = useState([]);
-    const [deliveredOrders, setDeliveredOrders] = useState([]);
+  const [undeliveredOrders, setUndeliveredOrders] = useState([]);
+  const [deliveredOrders, setDeliveredOrders] = useState([]);
+  const [livreurs, setLivreurs] = useState([]);
 
   // Fonction pour récupérer toutes les commandes
   const fetchInfo = async () => {
@@ -17,6 +18,19 @@ const ListOrder = () => {
       setAllOrders(data);
     } catch (error) {
       console.error("fetchInfo error:", error);
+    }
+  };
+  // Fonction pour récupérer tous les livreurs
+  const fetchLivreurs = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/alldelivery");
+      if (!response.ok) {
+        throw new Error("Erreur réseau lors de la récupération des livreurs.");
+      }
+      const data = await response.json();
+      setLivreurs(data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des livreurs:", error);
     }
   };
 
@@ -89,15 +103,16 @@ const ListOrder = () => {
   };
   useEffect(() => {
     fetchInfo();
+    fetchLivreurs();
   }, []);
-    useEffect(() => {
-      // Filtrer les commandes non livrées et livrées
-      const undelivered = allOrders.filter((order) => !order.delivred);
-      const delivered = allOrders.filter((order) => order.delivred);
-      // Mettre à jour les états locaux
-      setUndeliveredOrders(undelivered);
-      setDeliveredOrders(delivered);
-    }, [allOrders]);
+  useEffect(() => {
+    // Filtrer les commandes non livrées et livrées
+    const undelivered = allOrders.filter((order) => !order.delivred);
+    const delivered = allOrders.filter((order) => order.delivred);
+    // Mettre à jour les états locaux
+    setUndeliveredOrders(undelivered);
+    setDeliveredOrders(delivered);
+  }, [allOrders]);
 
   const formatDate = (dateString) => {
     const options = {
@@ -173,7 +188,7 @@ const ListOrder = () => {
       </div>
 
       <div className="delivred-order">
-        <h1>Liste des Commandes non livrée</h1>
+        <h1>Liste des Commandes livrée</h1>
         {deliveredOrders.map((order) => (
           <div key={order.id} className="listorder-details">
             <h2>
@@ -213,12 +228,34 @@ const ListOrder = () => {
               {order.delivred ? "Livrée" : "Non livrée"}
             </p>
             {!order.delivred ? (
-              <button
-                onClick={() => updateOrderDelivered(order.id)}
-                className="btn-confirm"
-              >
-                Marquer comme livrée
-              </button>
+              <>
+                <select
+                  defaultValue=""
+                  onChange={(e) => {
+                    console.log(
+                      `Livreur pour la commande ${order.id}:`,
+                      e.target.value
+                    );
+                  }}
+                >
+                  <option value="" disabled>
+                    Choisir un livreur
+                  </option>
+                  {livreurs.map((livreur) => (
+                    <option key={livreur._id} value={livreur._id}>
+                      {livreur.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => {
+                    updateOrderDelivered(order.id);
+                  }}
+                  className="btn-confirm"
+                >
+                  Envoyer la commande par le livreur
+                </button>
+              </>
             ) : (
               <button disabled>Livraison confirmée</button>
             )}
